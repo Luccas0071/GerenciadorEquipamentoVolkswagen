@@ -1,0 +1,119 @@
+<script>
+
+    function deleteUser(code){
+        console.log("Entrou no delete");
+        console.log(code);
+		var urlAction = "index.php?do=user&action=delete";
+
+		jQuery.ajax({
+			type: 'GET',
+			url: urlAction,
+			data: {
+                code: code
+            },
+			success: function (data) {
+				console.log(data);
+                redirect();
+			}
+		});
+	}
+
+    function redirect() {
+        window.location = "index.php?do=user&action=start";
+        alert ("Usuário excluido com sucesso !")
+    }
+
+    function returnUser() {
+        window.location = "index.php?do=user&action=start";
+    }
+
+</script>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <div class="padding-padrao">
+                {if $objUserForm->getShare() == "D"}
+                    <h1>Excluir Usuário</h1>
+                {else} 
+                    <h1>Exibir Usuário</h1>
+                {/if}
+            </div>
+        </div>
+
+        <div class="col-1">
+            <div class="padding-padrao">    
+                <button type="button" name="btn-excluir" id="btn-excluir" class="btn btn-primary" onclick="deleteUser('{$objUserForm->getId()}');">
+                    <i class="fas fa-trash"></i>Excluir
+                </button>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="padding-padrao">   
+                <button type="button" name="btn-voltar" id="btn-voltar" class="btn btn-primary" onclick="returnUser();">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row align-items-start">
+        <div class="col-12">
+            <div class="padding-padrao">
+                <h2><i class="fa-regular fa-user"></i> Exibir Usuário</h2>
+            </div>
+            <p class="font-weight-light">Informações do Usuário !</p>	
+        </div>  
+    </div>
+
+    <form name="formUser" id="formUser" method="POST">
+        <input type="hidden" name="share" 				id="share" 					value="{$objUserForm->getShare()}">
+        <input type="hidden" name="idUser" 			    id="idUser" 			    value="{$objUserForm->getId()}">
+    
+        <div class="row align-items-start">
+            <div class="col-3">
+                <div class="padding-padrao">
+                    <label for="name" title="Nome" class="text-ellipsis">Nome:</label>
+                    <input type="text" name="name" id="name" class="name form-control form-control-sm" value="{$objUserForm->getName()}" disabled>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="padding-padrao">
+                    <label for="email" title="Nome" class="text-ellipsis">E-Mail:</label>
+                    <input type="text" name="email" id="email" class="email form-control form-control-sm" value="{$objUserForm->getEmail()}" disabled>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="padding-padrao">
+                    <label for="status" title="status" class="text-ellipsis">Status:</label>
+                    <select name="status" id="status" class="status form-control form-control-sm" disabled>
+                        <option value="" selected>Selecione</option>
+                        <option value="true" selected>Ativo</option>
+                        <option value="false" selected>Inativo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="padding-padrao">
+                    <label for="creationDate" title="Nome" class="text-ellipsis">Data de Criação:</label>
+                    <input type="date" name="creationDate" id="creationDate" class="creationDate form-control form-control-sm" value="{$objUserForm->getCreationDate()}" disabled>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="padding-padrao">
+                    <label for="updateDate" title="Nome" class="text-ellipsis">Data de Atualização:</label>
+                    <input type="date" name="updateDate" id="updateDate" class="updateDate form-control form-control-sm" value="{$objUserForm->getUpdateDate()}" disabled>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</form>
+    <br>
+</div>

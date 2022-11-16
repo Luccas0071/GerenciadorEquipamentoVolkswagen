@@ -1,0 +1,32 @@
+<div class="p-5 mb-4 bg-light rounded-3">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Codigo</td>
+                <th scope="col">Nome</td>
+                <th scope="col">Data Adimissão</td>
+                <th scope="col">Cargo</td>
+                <th scope="col">Ação</td>
+            </tr>
+        </thead>
+        <tdoby>
+            {foreach item=objColaborador from=$collectionColaborador}
+                 
+                <tr>
+                    <td>{$objColaborador->getCodigo()}</td>
+                    <td>{$objColaborador->getNome()}</td>
+                    <td>{$objColaborador->getDataAdmissao()}</td>
+                    <td>{$objColaborador->getFuncao()}</td>
+                    <td>
+                        <button type="button" class="btn btn-warning">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            {/foreach}
+        </tdoby>
+    </table>
+</div>

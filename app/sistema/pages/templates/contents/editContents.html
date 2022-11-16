@@ -1,0 +1,149 @@
+<script language="JavaScript">
+    jQuery.noConflict();
+
+    function returnModule() {
+        window.location = "index.php?do=module&action=edit";
+    }
+
+    function save() {
+
+		var share = jQuery("#share").val();
+
+		if (share == "A") {
+			var urlAction = "index.php?do=course&action=change";
+		}
+
+		if (share == "I") {
+			var urlAction = "index.php?do=course&action=include";
+		}
+
+		formDados = new FormData(document.getElementById('frmCourse'));
+
+		jQuery.ajax({
+			type: 'POST',
+			url: urlAction,
+			data: formDados,
+			success: function (data) {
+				console.log(data);
+                redirect();
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	}
+
+    function redirect() {
+        window.location = "index.php?do=course&action=start";
+        alert ("Curso incluido com sucesso !")
+    }
+
+    function displayListContents() {
+        console.log('Entrou');
+        jQuery("#listContents").slideDown();
+        jQuery("#addContents").slideUp();
+
+        jQuery("#linkListContents").removeClass("inactive").addClass("active");
+        jQuery("#linkAddContents").removeClass("active").addClass("inactive");
+    }
+
+    function displayAddContents() {
+        console.log('saiu');
+        jQuery("#addContents").removeAttr("style");
+        jQuery("#listContents").slideUp();
+        jQuery("#addContents").slideDown();
+
+        jQuery("#linkListContents").removeClass("active").addClass("inactive");
+        jQuery("#linkAddContents").removeClass("inactive").addClass("active");
+    }
+
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-11">
+            <div class="padding-padrao">
+                {if $objContentsForm->getShare() == "A"}
+                    <h1>Alterar Conteúdo</h1>
+                {else} 
+                    <h1>Cadastro de Conteúdo</h1>
+                {/if}
+            </div>
+        </div>
+    
+        <div class="col-1">
+            <div class="padding-padrao">    
+                
+
+                <button type="button" name="btn-voltar" id="btn-voltar" class="btn btn-primary" onclick="returnModule();">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <form name="frmContents" id="frmContents" method="POST">
+        <input type="hidden" name="share" 				id="share" 				value="{$objContentsForm->getShare()}">
+        <input type="hidden" name="idContents" 			id="idContents" 		value="{$objContentsForm->getId()}">
+        <input type="hidden" name="idModule" 			id="idModule" 		    value="{$objContentsForm->getModule()}">
+        
+        <div class="row align-items-start">
+            <div class="col-12">
+                <ul class="aba-escolha">
+                    <li class="ativo" id="linkListContents" onclick="displayListContents();">
+                        <a href="#"><i class="fas fa-align-center"></i> Lista Conteúdo</a> 
+                         
+                    </li>
+                    <li class="inativo" id="linkAddContents" onclick="displayAddContents();">
+                        <a href="#"><i class="fas fa-plus-circle"></i> Adicionar Conteúdo</a> 
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="listContents">
+            {include file="contents/listContents.html"}
+        </div>
+
+        <div id="addContents" style="display: none">
+            <div class="row align-items-start">
+                <div class="col-12">
+                    <div class="padding-padrao">
+                        <h2><i class="fas fa-align-center"></i> Conteúdo</h2>
+                    </div>
+                    <p class="font-weight-light">Preencha os campos abaixo para cadastrar um novo Conteúdo !</p>	
+                </div>  
+            </div>
+
+            <div class="row align-items-start">
+               
+                <div class="col-2">
+                    <div class="padding-padrao">
+                        <label for="title" title="Titulo" class="text-ellipsis">Titulo:</label>
+                        <input type="text" name="title" id="title" class="title form-control form-control-sm" value="{$objContentsForm->getTitle()}" >
+                    </div>
+                </div>
+    
+                <div class="col-3">
+                    <div class="padding-padrao">
+                        <label for="contents" title="Conteúdo" class="text-ellipsis">Conteúdo:</label>
+                        <input type="text" name="contents" id="contents" class="contents form-control form-control-sm" value="{$objContentsForm->getContents()}" >
+                    </div>
+                </div>
+    
+                <div class="col-2">
+                    <div class="padding-padrao">
+                        <label for="creationDate" title="Data Criação" class="text-ellipsis">Data Criação:</label>
+                        <input type="date" name="creationDate" id="creationDate" class="creationDate form-control form-control-sm" value="{$objContentsForm->getCreationDate()}" >
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    
+        
+
+
+    </form>
+</div>

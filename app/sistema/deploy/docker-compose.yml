@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  php-apache:
+    container_name: mm-tecnologia-php
+    build:
+      context: ../.
+      dockerfile: ./deploy/Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - ../.:/var/www/html
+    ports:
+      - 8080:80
+  db:
+    container_name: mm-tecnologia-db
+    image: postgres
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: localhost
+      POSTGRES_DATABASE: mm_tecnologia
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: acesse
+    ports:
+    - "5432:5432"

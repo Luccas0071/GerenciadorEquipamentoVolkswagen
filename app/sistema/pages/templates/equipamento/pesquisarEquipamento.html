@@ -1,0 +1,52 @@
+<script>
+
+    function incluirEquipamento(){
+        window.location = "index.php?do=equipamento&action=editar&acao=I";
+    }
+
+
+</script>
+
+{include file="include/header.html"}
+{include file="include/menu.html"}
+
+<div class="container">
+    <div class="row">
+        <div class="col-11">
+            <h3>Equipamentos</h3>
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-primary btn-sm" onclick="incluirEquipamento()">
+                <i class="fa-solid fa-plus"></i> Incluir
+            </button>
+        </div>
+        <hr>
+        <p>Lista de Equipamentos</p>
+    </div>
+
+        <div id="container">
+            <div class="row">
+                <div class="row align-items-start form-group">
+                    
+                    <div class="col-3">
+                        <div class="padding-padrao">
+                            <label for="title" title="Titulo" class="text-ellipsis">Nome:</label>
+                            <input type="text" name="title" id="title" class="title form-control form-control-sm" value="" >
+                        </div>
+                    </div>
+
+                    <div class="col-2"><br>
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-magnifying-glass"></i> Pesquisar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <br>
+        {include file="equipamento/listarEquipamento.html"}
+  
+</div>
+
+
+{include file="include/footer.html"}

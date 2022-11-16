@@ -1,0 +1,178 @@
+<script>
+    function mostrarAquivo(){
+
+        formDados = new FormData(document.getElementById('arquivoForm'));
+       
+        jQuery.ajax({
+            type: "POST",
+            url: 'index.php?do=index&action=mostrarArquivo',
+            data: formDados,
+            success: function (data) {
+                console.log(data);
+                alert("Planilha Incluido com Sucesso !")
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    }
+
+    function processarArquivo(element){
+        let arquivo = element.files[0];
+        let nomeArquivo = jQuery("#nomeArquivo");
+        
+        let reader = new FileReader();
+        
+        reader.onload = function() {
+            let img = jQuery(element).closest("#importarArquivo").find(".previewImg").first();
+
+            nomeArquivo.attr('href', reader.result);
+            // nomeArquivo.text(arquivo.name);
+            
+            jQuery(img).attr("src", reader.result);
+            jQuery(img).show();
+
+
+        }
+        reader.readAsDataURL(arquivo);
+    }
+
+
+
+    function exibirModal(){
+        jQuery("#modal").slideDown("slow");;
+        jQuery("#fade").show()
+    }
+
+    function removerModal(){
+        jQuery("#modal").hide();
+        jQuery("#fade").slideUp("hide");
+    }
+
+</script>
+
+{include file="include/header.html"}
+{include file="include/menu.html"}
+
+<!-- Modal -->
+<!-- <div id="fade" style="display: none"></div>
+<div id="modal" style="display: none">
+    <div class="modal-header">
+        <h2>Conteudo Arquivo</h2>
+        <button id="import-modal" class="btn btn-primary" onclick="mostrarAquivo()"><i class="fa-sharp fa-solid fa-file-export"></i></button>
+        <button id="close-modal" class="btn btn-danger" onclick="removerModal()"><i class="fa-regular fa-circle-xmark"></i></button>
+    </div>
+    <div id="dadosArquivoModal" class="modal-body">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta aliquam ea, quibusdam ipsa est labore adipisci ducimus exercitationem molestias vitae ut voluptate itaque animi facere officiis aliquid totam velit praesentium.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui vel dolorum, laborum cupiditate veniam, nemo veritatis labore, deserunt rem asperiores amet excepturi! Velit officiis in quia quidem soluta repellat quod!
+    </div>
+</div> -->
+
+
+<!-- Conteudo -->
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Pesquisar</h3>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Veiculos</option>
+                {foreach item=objVeiculo from=$collectionVeiculo}										
+                    <option value="{$objVeiculo->getCodigo()}">{$objVeiculo->getNome()}</option>
+                {/foreach}
+            </select>
+        </div>
+        <div class="col-md-6" id="importarArquivo">
+            <form action="" name="arquivoForm" id="arquivoForm">
+                <h3>Arquivo</h3>
+                <div class="input-group mb-3">
+                    <input type="file" name="arquivo" class="form-control" id="arquivo" placeholder="arquivo" aria-label="Recipient's username" aria-describedby="basic-addon2" onchange="processarArquivo(this)">
+                    <div class="input-group-append">
+                        <a href="" target="_blank" id="nomeArquivo" class="text-ellipsis" type="hidden"></a>
+                        <button type="button" class="btn btn-outline-secondary" onclick="mostrarAquivo()">
+                            <i class="fa-sharp fa-solid fa-file-export"></i> Importar Arquivo
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container p-1">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="h-100 p-3 bg-light border rounded-3" style="text-align: center;">
+                <h2>Informações de Ferramentas</h2>
+                <div id="piechart" style="width: 500px; height: 250px;"></div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="h-100 p-3 bg-light border rounded-3" style="text-align: center;">
+                <h2>Proxima da Calibragem</h2>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Modela</td>
+                            <th scope="col">N° Série</td>
+                            <th scope="col">Data Calibragem</td>
+                            <th scope="col">Data Vencimento</td>
+                        </tr>
+                    </thead>
+                    <tdoby>
+                        {foreach item=objEquipamento from=$collectionEquipamento}
+                            <tr>
+                                <td>{$objEquipamento->getModelo()}</td>
+                                <td>{$objEquipamento->getNumeroSerie()}</td>
+                                <td>{$objEquipamento->getDataCalibragem()}</td>
+                                <td>{$objEquipamento->getDataVencimento()}</td>
+                            </tr>
+                        {/foreach}
+                    </tdoby>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="p-5 mb-4 bg-light rounded-3">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Tacto</td>
+                    <th scope="col">Modelo</td>
+                    <th scope="col">N° Serie</td>
+                    <th scope="col">Vencimento</td>
+                    <th scope="col">Data Calibração</td>
+                    <th scope="col">Status</td>
+                    <th scope="col">Torque</td>
+                    <th scope="col">Ação</td>
+                </tr>
+            </thead>
+            <tdoby>
+                {foreach item=objPlanilha from=$collectionPlanilha}
+                     
+                    <tr>
+                        <td>{$objPlanilha->getTacto()}</td>
+                        <td>{$objPlanilha->getModelo()}</td>
+                        <td>{$objPlanilha->getNumeroSerie()}</td>
+                        <td>{$objPlanilha->getVenciamento()}</td>
+                        <td>{$objPlanilha->getDataCalibracao()}</td>
+                        <td>{$objPlanilha->getStatus()}</td>
+                        <td>{$objPlanilha->getTorque()}</td>
+                        <td>
+                            <button type="button" class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {/foreach}
+            </tdoby>
+        </table>
+    </div> -->
+
+    
+</div>
+
+{include file="include/footer.html"}

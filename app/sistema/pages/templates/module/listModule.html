@@ -1,0 +1,77 @@
+<script language="JavaScript">
+    jQuery.noConflict();
+
+    function include() {
+        window.location = "index.php?do=module&action=edit&share=I";
+    }
+
+    function displayModule(code) {
+        window.location = "index.php?do=module&action=edit&share=E&code="+code;
+    }
+
+    function contentModule(code) {
+        window.location = "index.php?do=contents&action=edit&share=I&code="+code;
+    }
+
+    function changeModule(code) {
+        window.location = "index.php?do=module&action=edit&share=A&code="+code;
+        jQuery("#listModule").slideUp();
+        jQuery("#addModule").slideDown();
+    }
+
+    function deleteModule(code) {
+        window.location = "index.php?do=module&action=edit&share=D&code="+code;
+    }
+
+</script>
+
+<div class="container">
+    <div class="row align-items-start">
+      <div class="col-12">
+          <div class="padding-padrao">
+              <h1>Módulo</h1>
+          </div>
+      </div>
+
+    </div>
+    <hr>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="col-1">#</th>
+            <th class="col-1">Codigo</th>
+            <th class="col-2">Titulo</th>
+            <th class="col-2">Responsável</th>
+            <th class="col-1">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+            {foreach item=$objModule from=$collectionModule}
+                <tr>
+                    <th>{$objModule->getId()}</th>
+                    <td>{$objModule->getTitle()}</td>
+                    <td>{$objModule->getDescription()}</td>
+                    <td>{$objModule->getUpdateDate()}</td>
+                    <td>
+                        <button type="button" title="Exibir" class="btn btn-primary btn-sm" onclick="javascript: displayModule('{$objModule->getId()}');">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button type="button" title="Conteudo" class="btn btn-info btn-sm" onclick="javascript: contentModule('{$objModule->getId()}');">
+                            <i class="fas fa-align-center"></i>
+                        </button>
+                        <button type="button" title="Alterar" class="btn btn-warning btn-sm" onclick="javascript: changeModule('{$objModule->getId()}')">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                        <button type="button" title="Exc
+                        luir" class="btn btn-danger btn-sm" onclick="javascript: deleteModule('{$objModule->getId()}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>

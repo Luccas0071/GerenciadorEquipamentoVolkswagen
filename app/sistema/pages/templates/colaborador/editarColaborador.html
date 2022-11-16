@@ -1,0 +1,94 @@
+
+<script>
+
+    function salvarColaborador(){
+        var acao = jQuery("#acao").val();
+
+        if (acao == "I") {
+			var urlAction = "index.php?do=colaborador&action=incluir";
+		}else{
+			var urlAction = "index.php?do=colaborador&action=alterar";
+		}
+
+        formDados = new FormData(document.getElementById('frmColaborador'));
+
+		jQuery.ajax({
+			type: 'POST',
+			url: urlAction,
+			data: formDados,
+			success: function (data) {
+				console.log(data);
+                redirecionar()
+                alert("Colaborador Incluido com Sucesso !")
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+    }
+
+    function redirecionar(){
+        window.location = "index.php?do=colaborador&action=inicio";
+    }
+
+</script>
+
+{include file="include/header.html"}
+{include file="include/menu.html"}
+
+<div class="container">
+    <div class="row">
+        <div class="col-11">
+            <div class="padding-padrao">
+                <h2>Cadastrar Colaborador</h2>
+            </div>
+        </div>
+
+        <div class="col-1">
+            <div class="padding-padrao texto-right">    
+                <button type="button" name="btn-incluir" id="btn-incluir" class="btn btn-primary btn-sm" onclick="salvarColaborador();">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row align-items-start">
+        <div class="col-12">
+            <p class="font-weight-light">Preencha os campos abaixo para cadastrar um novo Colaborador !</p>	
+        </div>  
+    </div>
+         
+    <form name="frmColaborador" id="frmColaborador">
+        <input type="hidden" name="acao" 				id="acao" 				    value="{$objColaboradorForm->getAcao()}">
+        <input type="hidden" name="codigoColaborador" 	id="codigoColaborador" 		value="{$objColaboradorForm->getCodigo()}">
+        
+    
+        <div class="row align-items-start">
+            <div class="col-3">
+                <div class="padding-padrao">
+                    <label for="nome" title="Código Unico" class="text-ellipsis">Nome:</label>
+                    <input type="text" name="nome" id="nome" class="nome form-control form-control-sm" value="{$objColaboradorForm->getNome()}" >
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="padding-padrao">
+                    <label for="cargo" title="Cargo" class="text-ellipsis">Cargo:</label>
+                    <input type="text" name="cargo" id="cargo" class="cargo form-control form-control-sm" value="{$objColaboradorForm->getFuncao()}" >
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="padding-padrao">
+                    <label for="dataAdmissao" title="Data Admissão" class="text-ellipsis">Data Admissão:</label>
+                    <input type="date" name="dataAdmissao" id="dataAdmissao" class="dataAdmissao form-control form-control-sm" value="{$objColaboradorForm->getDataAdmissao()}" >
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{include file="include/footer.html"}

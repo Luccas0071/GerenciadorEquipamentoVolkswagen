@@ -1,0 +1,162 @@
+<script language="JavaScript">
+    jQuery.noConflict();
+
+    function returnModule() {
+        window.location = "index.php?do=course&action=start";
+    }
+
+    function save() {
+
+		var share = jQuery("#share").val();
+
+		if (share == "A") {
+			var urlAction = "index.php?do=course&action=change";
+		}
+
+		if (share == "I") {
+			var urlAction = "index.php?do=course&action=include";
+		}
+
+		formDados = new FormData(document.getElementById('frmCourse'));
+
+		jQuery.ajax({
+			type: 'POST',
+			url: urlAction,
+			data: formDados,
+			success: function (data) {
+				console.log(data);
+                redirect();
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	}
+
+    function redirect() {
+        window.location = "index.php?do=course&action=start";
+        alert ("Curso incluido com sucesso !")
+    }
+
+    function displayListModule() {
+        jQuery("#listModule").slideDown();
+        jQuery("#addModule").slideUp();
+
+        jQuery("#linkListModule").removeClass("inactive").addClass("active");
+        jQuery("#linkAddModule").removeClass("active").addClass("inactive");
+    }
+
+    function displayAddModule() {
+        jQuery("#listModule").slideUp();
+        jQuery("#addModule").slideDown();
+
+        jQuery("#linkListModule").removeClass("active").addClass("inactive");
+        jQuery("#linkAddModule").removeClass("inactive").addClass("active");
+    }
+
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <div class="padding-padrao">
+                {if $objModuleForm->getShare() == "A"}
+                    <h1>Alterar Module</h1>
+                {else} 
+                    <h1>Cadastro de Module</h1>
+                {/if}
+            </div>
+        </div>
+
+        <div class="col-2">
+            <div class="padding-padrao">    
+                <button type="button" name="btn-incluir" id="btn-incluir" class="btn btn-primary" onclick="save();">
+                    <i class="fas fa-plus"></i>Salvar
+                </button>
+
+                <button type="button" name="btn-voltar" id="btn-voltar" class="btn btn-primary" onclick="returnModule();">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <form name="frmModule" id="frmModule" method="POST">
+        <input type="hidden" name="share" 				id="share" 				value="{$objModuleForm->getshare()}">
+        <input type="hidden" name="idModule" 			id="idModule" 			value="{$objModuleForm->getId()}">
+        
+        <div class="row align-items-start">
+            <div class="col-12">
+                <ul class="aba-escolha">
+                    <li class="ativo" id="linkListModule" onclick="displayListModule();">
+                        <a href="#"><i class="fas fa-layer-group"></i> Lista Módulo</a> 
+                         
+                    </li>
+                    <li class="inativo" id="linkAddModule" onclick="displayAddModule();">
+                        <a href="#"><i class="fas fa-plus-circle"></i> Adicionar Módulo</a> 
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="listModule">
+            {include file="module/listModule.html"}
+        </div>
+
+        <div id="addModule" style="display: none">
+            <div class="row align-items-start">
+                <div class="col-12">
+                    <div class="padding-padrao">
+                        <h2><i class="fas fa-layer-group"></i> Modulo</h2>
+                    </div>
+                    <p class="font-weight-light">Preencha os campos abaixo para cadastrar um novo Modulo !</p>	
+                </div>  
+            </div>
+
+            <div class="row align-items-start">
+               
+                <div class="col-2">
+                    <div class="padding-padrao">
+                        <label for="title" title="Titulo" class="text-ellipsis">Titulo:</label>
+                        <input type="text" name="title" id="title" class="title form-control form-control-sm" value="{$objModuleForm->getTitle()}" >
+                    </div>
+                </div>
+    
+                <div class="col-3">
+                    <div class="padding-padrao">
+                        <label for="description" title="Descrição" class="text-ellipsis">Descrição:</label>
+                        <input type="text" name="description" id="description" class="description form-control form-control-sm" value="{$objModuleForm->getDescription()}" >
+                    </div>
+                </div>
+    
+                <div class="col-2">
+                    <div class="padding-padrao">
+                        <label for="creationDate" title="Data Criação" class="text-ellipsis">Data Criação:</label>
+                        <input type="date" name="creationDate" id="creationDate" class="creationDate form-control form-control-sm" value="{$objModuleForm->getCreationDate()}" >
+                    </div>
+                </div>
+    
+                <div class="col-2">
+                    <div class="padding-padrao">
+                        <label for="user" title="Usuário" class="text-ellipsis">Usuário:</label>
+                        <select name="user" id="user" class="user form-control form-control-sm">
+                            <option value="" selected>Selecione</option>
+                            {foreach item=objUser from=$collectionUser}
+                                {if ($objModuleForm->getUser() == $objUser->getId())}
+                                    <option value="{$objUser->getId()}" selected>{$objUser->getName()}</option>
+                                {else}											
+                                    <option value="{$objUser->getId()}">{$objUser->getName()}</option>
+                                {/if} 
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        
+
+
+    </form>
+</div>

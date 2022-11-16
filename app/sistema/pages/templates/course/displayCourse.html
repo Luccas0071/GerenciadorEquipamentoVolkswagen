@@ -1,0 +1,139 @@
+<script language="JavaScript">
+    jQuery.noConflict();
+
+    function deleteCourse(code){
+        console.log(code);
+		var urlAction = "index.php?do=course&action=delete";
+
+		jQuery.ajax({
+			type: 'GET',
+			url: urlAction,
+			data: {
+                code: code
+            },
+			success: function (data) {
+				console.log(data);
+                redirect();
+			}
+		});
+	}
+
+    function redirect() {
+        window.location = "index.php?do=course&action=start";
+        alert ("Curso excluido com sucesso !")
+    }
+
+    function returnCourse() {
+
+        window.location = "index.php?do=course&action=start";
+    }
+    
+    function desabilitaCampo(escopo = ".principal", disabled = true) {
+        console.log("Entrou no Desabilitar");
+        let principal = jQuery(escopo).first();
+
+        jQuery(principal).find('input:not([type=button]), select, textarea').each((indice, input) => {
+
+            if (disabled) {
+                jQuery(input).attr("disabled", "disabled");
+            } else {
+                jQuery(input).attr("readonly", "readonly");
+            }
+        });
+    }
+
+</script>
+
+<div class="container">
+        <div class="row">
+            <div class="col-10">
+                <div class="padding-padrao">
+                    {if $objCourseForm->getShare() == "D"}
+                        <h1>Excluir Curso</h1> 
+					{else} 
+                        <h1>Exibir Curso</h1>
+					{/if}
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="padding-padrao">
+                    {if $objCourseForm->getShare() == "D"}
+                        <button type="submit" name="btn-incluir" id="btn-incluir" class="btn btn-primary" onclick="deleteCourse('{$objCourseForm->getId()}');">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
+                    {/if}
+                    <button type="button" name="btn-voltar" id="btn-voltar" class="btn btn-primary" onclick="returnCourse();">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        
+        <!-- Course -->
+        <div class="row align-items-start">
+            <div class="col-12">
+                <div class="padding-padrao">
+                    <h2><i class="fas fa-graduation-cap"></i> Exibir Curso</h2>
+                </div>
+                <p class="font-weight-light">Informações Cursos !</p>	
+            </div>  
+        </div>
+            
+        <form name="frmCourse" id="frmCourse" method="POST">
+            <input type="hidden" name="share" 				id="share" 				value="{$objCourseForm->getshare()}">
+            <input type="hidden" name="idCourse" 			id="idCourse" 			value="{$objCourseForm->getId()}">
+            
+        
+            <div class="row align-items-start">
+                <div class="col-1">
+                    <div class="padding-padrao">
+                        <label for="uniqueCode" title="Código Unico" class="text-ellipsis">Código:</label>
+                        <input type="text" name="uniqueCode" id="uniqueCode" class="uniqueCode form-control form-control-sm" value="{$objCourseForm->getUniqueCode()}" >
+                    </div>
+                </div>
+    
+                <div class="col-3">
+                    <div class="padding-padrao">
+                        <label for="title" title="Titulo" class="text-ellipsis">Titulo:</label>
+                        <input type="text" name="title" id="title" class="title form-control form-control-sm" value="{$objCourseForm->getTitle()}" >
+                    </div>
+                </div>
+    
+                <div class="col-4">
+                    <div class="padding-padrao">
+                        <label for="description" title="Descrição" class="text-ellipsis">Descrição:</label>
+                        <input type="text" name="description" id="description" class="description form-control form-control-sm" value="{$objCourseForm->getDescription()}" >
+                    </div>
+                </div>
+    
+                <div class="col-2">
+                    <div class="padding-padrao">
+                        <label for="creationDate" title="Data Criação" class="text-ellipsis">Data Criação:</label>
+                        <input type="date" name="creationDate" id="creationDate" class="creationDate form-control form-control-sm" value="{$objCourseForm->getCreationDate()}" >
+                    </div>
+                </div>
+    
+                <div class="col-2">
+                    <div class="padding-padrao">
+                        <label for="user" title="Usuário" class="text-ellipsis">Usuário:</label>
+                        <select name="user" id="user" class="user form-control form-control-sm">
+                            <option value="" selected>Selecione</option>
+                            {foreach item=objUser from=$collectionUser}
+                                {if ($objCourseForm->getUser() == $objUser->getId())}
+                                    <option value="{$objUser->getId()}" selected>{$objUser->getName()}</option>
+                                {else}											
+                                    <option value="{$objUser->getId()}">{$objUser->getName()}</option>
+                                {/if} 
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <br>
+</div>
+<script>	
+	desabilitaCampo();	
+</script> 

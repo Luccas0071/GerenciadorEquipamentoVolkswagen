@@ -1,0 +1,71 @@
+<script language="JavaScript">
+    jQuery.noConflict();
+
+    function include() {
+        window.location = "index.php?do=course&action=edit&share=I";
+    }
+
+    function displayCourse(code) {
+        window.location = "index.php?do=course&action=edit&share=E&code="+code;
+    }
+
+    function moduleCourse(code) {
+        window.location = "index.php?do=module&action=start&share=M&code="+code;
+    }
+
+    function changeCourse(code) {
+        window.location = "index.php?do=course&action=edit&share=A&code="+code;
+    }
+
+    function deleteCourse(code) {
+        window.location = "index.php?do=course&action=edit&share=D&code="+code;
+    }
+
+</script>
+
+<div class="container">
+    <div class="row align-items-start">
+      <div class="col-12">
+          <div class="padding-padrao">
+              <h1>Conteúdo</h1>
+          </div>
+      </div>
+
+    </div>
+    <hr>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="col-1">#</th>
+            <th class="col-2">Titulo</th>
+            <th class="col-2">Responsável</th>
+            <th class="col-1">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+            {foreach item=$objContents from=$collectionContents}
+            {assign var="objModule" value=$objContents->getObjModule()}
+            {assign var="objUser" value=$objModule->getObjUser()}
+                <tr>
+                    <th>{$objContents->getId()}</th>
+                    <td>{$objContents->getTitle()}</td>
+                    <td>{$objUser->getName()}</td>
+                    <td>
+                        <button type="button" title="Exibir" class="btn btn-primary btn-sm" onclick="javascript: displayModule('{$objContents->getId()}');">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button type="button" title="Alterar" class="btn btn-warning btn-sm" onclick="javascript: changeModule('{$objContents->getId()}')">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                        <button type="button" title="Excluir" class="btn btn-danger btn-sm" onclick="javascript: deleteModule('{$objContents->getId()}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>

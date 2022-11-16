@@ -1,0 +1,84 @@
+<script language="JavaScript">
+    jQuery.noConflict();
+
+    function include() {
+        window.location = "index.php?do=user&action=edit&share=I";
+    }
+
+    function displayUser(code) {
+        window.location = "index.php?do=user&action=edit&share=E&code="+code;
+    }
+
+    function changeUser(code) {
+        window.location = "index.php?do=user&action=edit&share=A&code="+code;
+    }
+
+    function deleteUser(code) {
+        window.location = "index.php?do=user&action=edit&share=D&code="+code;
+    }
+
+</script>
+
+
+<div class="container">
+    <div class="row align-items-start">
+      <div class="col-11">
+          <div class="padding-padrao">
+              <h1>Usuário</h1>
+          </div>
+      </div>
+      <div class="col-1">
+        <div class="padding-padrao">    
+            <button type="button" name="btn-incluir" id="btn-incluir" class="btn btn-primary" onclick="include();">
+                <i class="fas fa-plus"></i>Incluir
+            </button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row align-items-start">
+        <div class="col-4">
+            <div class="padding-padrao">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Pesquisar Colaborador">
+                    <button type="button" name="btn-search" id="btn-search" class="btn btn-primary" onclick="search();">
+                        <i class="fas fa-search"></i> Pesquisar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>E-Mail</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+        {foreach item=$objUser from=$collectionUser}
+            <tr>
+                <th class="col-1">{$objUser->getId()}</th>
+                <td class="col-3">{$objUser->getName()}</td>
+                <td class="col-3">{$objUser->getEmail()}</td>
+                <td class="col-2">
+                    <button type="button" title="Exibir" class="btn btn-primary btn-sm" onclick="javascript: displayUser('{$objUser->getId()}');">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button type="button" title="Alterar" class="btn btn-warning btn-sm" onclick="javascript: changeUser('{$objUser->getId()}')">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                    <button type="button" title="excluir" class="btn btn-danger btn-sm" onclick="javascript: deleteUser('{$objUser->getId()}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        {/foreach}
+        </tbody>
+    </table>
+</div>
