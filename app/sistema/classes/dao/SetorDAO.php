@@ -11,16 +11,19 @@ class SetorDAO extends DAOFactory{
 		$sql  = " INSERT INTO gerenciador.tb_setor ";
 		$sql .= " ( ";
 		$sql .= " 	set_nome, ";
-		$sql .= " 	set_data_inclusao ";
+		$sql .= " 	set_data_inclusao, ";
+		$sql .= " 	vei_codigo ";
 		$sql .= " ) VALUES ( ";
 		$sql .= " 	:nome, ";
-		$sql .= " 	:dataInclusao ";
+		$sql .= " 	:dataInclusao, ";
+		$sql .= " 	:codigoVeiculo ";
 	  	$sql .= " ) ";
 
         $query = parent::$connection->pdo->prepare($sql);
 
-        $query->bindParam(':nome', 				$objSetor->getNome(), 			PDO::PARAM_STR);
-        $query->bindParam(':dataInclusao', 		$objSetor->getDataInclusao(), 	PDO::PARAM_STR);
+        $query->bindParam(':nome', 				$objSetor->getNome(), 						PDO::PARAM_STR);
+        $query->bindParam(':dataInclusao', 		$objSetor->getDataInclusao(), 				PDO::PARAM_STR);
+        $query->bindParam(':codigoVeiculo', 	$objSetor->getObjVeiculo()->getCodigo(), 	PDO::PARAM_STR);
 
 		if (!$query->execute()) {
 			$collectionErro = $query->errorInfo();
@@ -34,10 +37,13 @@ class SetorDAO extends DAOFactory{
 		$collectionSetor = array();
 
 		$sql  = " SELECT ";
-		$sql .= " 	set_codigo, ";
-		$sql .= " 	set_nome, ";
-		$sql .= " 	set_data_inclusao ";
-		$sql .= " FROM gerenciador.tb_setor ";
+		$sql .= " 	seto.set_codigo,  ";
+		$sql .= " 	seto.set_nome,  ";
+		$sql .= " 	seto.set_data_inclusao, ";
+		$sql .= " 	seto.vei_codigo, ";
+		$sql .= " 	vei.vei_nome ";
+		$sql .= " FROM gerenciador.tb_setor AS seto ";
+		$sql .= " LEFT JOIN gerenciador.tb_veiculo AS vei ON seto.vei_codigo = vei.vei_codigo ";
 
         $query = parent::$connection->pdo->prepare($sql);
 
@@ -48,6 +54,9 @@ class SetorDAO extends DAOFactory{
                 $objSetor->setCodigo($rs['set_codigo']);
                 $objSetor->setNome($rs['set_nome']);
                 $objSetor->setDataInclusao($rs['set_data_inclusao']);
+                $objSetor->setObjVeiculo(new Veiculo());
+                $objSetor->getObjVeiculo()->setCodigo($rs['vei_codigo']);
+                $objSetor->getObjVeiculo()->setNome($rs['vei_nome']);
 
                 array_push($collectionSetor, $objSetor);
             }

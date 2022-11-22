@@ -24,53 +24,19 @@ class RelatorioAction
         return true;
 	}
     
-    public function editar($get){
+    public function gerarRelatorio(){
 
-        $smarty             = new Smarty();
-        $objColaboradorForm     = new ColaboradorForm();
-        $objColaboradorFacade   = new ColaboradorFacade();
-
-        $acao = $get['acao'];
+        $smarty                 = new Smarty();
+        $objRelatorioFacade   = new RelatorioFacade();
 
         try {
-            // $collectionColaborador = $objColaboradorFacade->listarColaborador();
-            // $smarty->assign("collectionColaborador", $collectionColaborador);
+            $objRelatorioFacade->gerarRelatorio();
 
         } catch (Exception $e) {
             $mensagem = $e;
-            throw new Exception("ColaboradorAction->inicio " . $e);
-        }
-
-  
-
-        $objColaboradorForm->setAcao($acao);
-
-        $smarty->assign("objColaboradorForm", $objColaboradorForm);
-
-        if($acao == "I"){
-            $smarty->display('templates/colaborador/editarColaborador.html');
+            throw new Exception("RelatorioAction->gerarRelatorio " . $e);
         }
         return true;
-    }
-
-    public function incluir($request){
-
-        $smarty             = new Smarty();
-        $objColaboradorForm     = new ColaboradorForm();
-        $objColaboradorFacade   = new ColaboradorFacade();
-
-        try {
-            $objColaboradorForm->transfereRequestForm($request);
-            $objColaborador = $objColaboradorForm->transfereFormModel();
-
-            $objColaboradorFacade->incluirColaborador($objColaborador);
-           
-        } catch (Exception $e) {
-            $mensagem = $e;
-            throw new Exception("ColaboradorAction->inicio " . $e);
-        }
-
-        return true;
-    }
+	}
 
 }

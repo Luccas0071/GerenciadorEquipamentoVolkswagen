@@ -35,43 +35,6 @@
             }  
         </script>
 
-
-        <!-- GRAFICO -->
-        {literal}
-        <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <script>
-
-            google.charts.load('current', {'packages':['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-
-            console.log("Entrou aqui");
-
-            function drawChart() {
-
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    ['Ok',     11],
-                    ['Em Calibragem',      2],
-                    ['A Bateria',  2],
-                    ['Pneumáticas', 2],
-                    ['Não Encontrado',    7]
-                ]);
-
-                var options = {
-                    backgroundColor: '#f8f9fa',
-                    fontFamily: '102px',
-                    is3D: true,
-  
-                };
-
-                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-                chart.draw(data, options);
-            }
-        </script>
-        {/literal}
-      
-
     </head>
 
 <body>

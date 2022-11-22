@@ -58,6 +58,25 @@ class VeiculoDAO extends DAOFactory{
         return $collectionVeiculo;
     }
 
+	public function excluirVeiculo($codigoVeiculo){
+
+		$sql  = "DELETE FROM ";
+		$sql .= "	gerenciador.tb_veiculo ";
+		$sql .= " WHERE ";
+		$sql .= "   vei_codigo = :codigoVeiculo ";
+
+		$query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoVeiculo', $codigoVeiculo, PDO::PARAM_INT);
+
+		if (!$query->execute()) {
+			$collectionErro = $query->errorInfo();
+			throw new Exception("VeiculoDAO->excluirVeiculo " . $collectionErro[2]);
+		}
+		return true;
+	}
+	
+
     // public function listContents($idModule){
     //     $collectionContents = array();
 

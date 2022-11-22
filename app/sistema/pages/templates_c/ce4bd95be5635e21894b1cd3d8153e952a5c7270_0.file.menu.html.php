@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-15 13:07:16
+/* Smarty version 4.0.0, created on 2022-11-23 00:44:21
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\include\menu.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_637380f4982044_96227168',
+  'unifunc' => 'content_637d5ed5945434_74544295',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ce4bd95be5635e21894b1cd3d8153e952a5c7270' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\include\\menu.html',
-      1 => 1668513444,
+      1 => 1669160657,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_637380f4982044_96227168 (Smarty_Internal_Template $_smarty_tpl) {
+function content_637d5ed5945434_74544295 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="imagem-banner">
     <img src="img/bannerVolkswagen6.png" style="width: 100%;">
 </div>
@@ -37,6 +37,8 @@ function content_637380f4982044_96227168 (Smarty_Internal_Template $_smarty_tpl)
           <li><a href="index.php?do=equipamento&action=inicio" class="nav-link px-2 text-white">Equipamentos</a></li>
           <li><a href="index.php?do=planilha&action=inicio" class="nav-link px-2 text-white">Planilhas</a></li>
           <li><a href="index.php?do=colaborador&action=inicio" class="nav-link px-2 text-white">Colaborador</a></li>
+          <li><a href="index.php?do=veiculo&action=inicio" class="nav-link px-2 text-white">Veiculo</a></li>
+          <li><a href="index.php?do=setor&action=inicio" class="nav-link px-2 text-white">Setor</a></li>
           <li><a href="index.php?do=relatorio&action=inicio" class="nav-link px-2 text-white">Relatórios</a></li>
         </ul>
 

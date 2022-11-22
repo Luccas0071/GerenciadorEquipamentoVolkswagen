@@ -1,0 +1,30 @@
+<div class="p-5 mb-4 bg-light rounded-3">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Codigo</td>
+                <th scope="col">Nome</td>
+                <th scope="col">Data Inclusão</td>
+                <th scope="col">Ação</td>
+            </tr>
+        </thead>
+        <tdoby>
+            {foreach item=objVeiculo from=$collectionVeiculo}
+                 
+                <tr>
+                    <td>{$objVeiculo->getCodigo()}</td>
+                    <td>{$objVeiculo->getNome()}</td>
+                    <td>{$objVeiculo->getDataInclusao()}</td>
+                    <td>
+                        <button type="button" class="btn btn-warning" onclick="editarVeiculo('{$objVeiculo->getCodigo()}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="excluirVeiculo('{$objVeiculo->getCodigo()}')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            {/foreach}
+        </tdoby>
+    </table>
+</div>

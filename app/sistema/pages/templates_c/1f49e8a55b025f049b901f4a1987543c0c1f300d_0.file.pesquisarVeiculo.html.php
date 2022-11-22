@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-20 13:48:18
-  from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\equipamento\pesquisarEquipamento.html' */
+/* Smarty version 4.0.0, created on 2022-11-22 01:03:48
+  from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\veiculo\pesquisarVeiculo.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_637a221297b042_90539102',
+  'unifunc' => 'content_637c11e48480e9_04729022',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'e98135d172d3e2b2b85723729560936d29a77b51' => 
+    '1f49e8a55b025f049b901f4a1987543c0c1f300d' => 
     array (
-      0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\equipamento\\pesquisarEquipamento.html',
-      1 => 1668948495,
+      0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\veiculo\\pesquisarVeiculo.html',
+      1 => 1669075425,
       2 => 'file',
     ),
   ),
@@ -20,44 +20,45 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
     'file:include/header.html' => 1,
     'file:include/menu.html' => 1,
-    'file:equipamento/listarEquipamento.html' => 1,
+    'file:veiculo/listarVeiculo.html' => 1,
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_637a221297b042_90539102 (Smarty_Internal_Template $_smarty_tpl) {
+function content_637c11e48480e9_04729022 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
 
-    function incluirEquipamento(){
-        window.location = "index.php?do=equipamento&action=editar&acao=I";
+    function incluirVeiculo(){
+        window.location = "index.php?do=veiculo&action=editar&acao=I";
     }
 
-    function editarEquipamento(codigoEquipamento){
-        window.location = "index.php?do=equipamento&action=editar&acao=A&codigoEquipamento=" + codigoEquipamento;
+    function editarVeiculo(codigoVeiculo){
+        window.location = "index.php?do=veiculo&action=editar&acao=A&codigoVeiculo=" + codigoVeiculo;
     }
 
-    function excluirEquipamento(codigoEquipamento){
+    function excluirVeiculo(codigoVeiculo){
 
-        var resposta = confirm("Deseja realmente excluir este equipamento !");
+        var resposta = confirm("Deseja realmente excluir este veiculo !");
 
         if(resposta == true){
 
-            var urlAction = "index.php?do=equipamento&action=excluir";
+            var urlAction = "index.php?do=veiculo&action=excluir";
 
             jQuery.ajax({
                 type: 'GET',
                 url: urlAction,
                 data: {
-                    'codigoEquipamento':codigoEquipamento
+                    'codigoVeiculo':codigoVeiculo
                 },
                 success: function (data) {
                     console.log(data);
-                    window.location = "index.php?do=equipamento&action=inicio";
-                    alert("Equipamento excluido com Sucesso !")
+                    window.location = "index.php?do=veiculo&action=inicio";
+                    alert("Veiculo excluido com Sucesso !")
                 }
             });
         }
     }
+
 
 <?php echo '</script'; ?>
 >
@@ -69,21 +70,20 @@ $_smarty_tpl->_subTemplateRender("file:include/menu.html", $_smarty_tpl->cache_i
 <div class="container">
     <div class="row">
         <div class="col-11">
-            <h3>Equipamentos</h3>
+            <h3>Veiculos</h3>
         </div>
         <div class="col-1">
-            <button type="button" class="btn btn-primary btn-sm" onclick="incluirEquipamento()">
+            <button type="button" class="btn btn-primary btn-sm" onclick="incluirVeiculo()">
                 <i class="fa-solid fa-plus"></i> Incluir
             </button>
         </div>
         <hr>
-        <p>Lista de Equipamentos</p>
+        <p>Lista de Veiculos</p>
     </div>
 
         <div id="container">
             <div class="row">
                 <div class="row align-items-start form-group">
-                    
                     <div class="col-3">
                         <div class="padding-padrao">
                             <label for="title" title="Titulo" class="text-ellipsis">Nome:</label>
@@ -100,7 +100,7 @@ $_smarty_tpl->_subTemplateRender("file:include/menu.html", $_smarty_tpl->cache_i
             </div>
         </div>
           <br>
-        <?php $_smarty_tpl->_subTemplateRender("file:equipamento/listarEquipamento.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+        <?php $_smarty_tpl->_subTemplateRender("file:veiculo/listarVeiculo.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
   
 </div>

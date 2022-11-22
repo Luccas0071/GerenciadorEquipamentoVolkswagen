@@ -6,20 +6,20 @@ class SetorAction
 {
     public function inicio(){
 
-        $smarty             = new Smarty();
-        $objColaboradorForm     = new ColaboradorForm();
-        $objColaboradorFacade   = new ColaboradorFacade();
+        $smarty           = new Smarty();
+        $objSetorForm     = new SetorForm();
+        $objSetorFacade   = new SetorFacade();
 
         try {
-            $collectionColaborador = $objColaboradorFacade->listarColaborador();
-            $smarty->assign("collectionColaborador", $collectionColaborador);
+            $collectionSetor = $objSetorFacade->listarSetor();
+            $smarty->assign("collectionSetor", $collectionSetor);
 
         } catch (Exception $e) {
             $mensagem = $e;
-            throw new Exception("ColaboradorAction->inicio " . $e);
+            throw new Exception("SetorAction->inicio " . $e);
         }
 
-        $smarty->display('templates/colaborador/pesquisarColaborador.html');
+        $smarty->display('templates/setor/pesquisarSetor.html');
 
         return true;
 	}
@@ -27,26 +27,27 @@ class SetorAction
     public function editar($get){
 
         $smarty             = new Smarty();
-        $objColaboradorForm     = new ColaboradorForm();
-        $objColaboradorFacade   = new ColaboradorFacade();
+        $objSetorForm       = new SetorForm();
+        $objSetorFacade     = new SetorFacade();
+        $objVeiculoFacade   = new VeiculoFacade();
 
         $acao = $get['acao'];
 
         try {
-            // $collectionColaborador = $objColaboradorFacade->listarColaborador();
-            // $smarty->assign("collectionColaborador", $collectionColaborador);
+            $collectionVeiculo = $objVeiculoFacade->listarVeiculo();
+            $smarty->assign("collectionVeiculo", $collectionVeiculo);
 
         } catch (Exception $e) {
             $mensagem = $e;
-            throw new Exception("ColaboradorAction->inicio " . $e);
+            throw new Exception("SetorAction->inicio " . $e);
         }
 
-        $objColaboradorForm->setAcao($acao);
+        $objSetorForm->setAcao($acao);
 
-        $smarty->assign("objColaboradorForm", $objColaboradorForm);
+        $smarty->assign("objSetorForm", $objSetorForm);
 
         if($acao == "I"){
-            $smarty->display('templates/colaborador/editarColaborador.html');
+            $smarty->display('templates/setor/editarSetor.html');
         }
         return true;
     }

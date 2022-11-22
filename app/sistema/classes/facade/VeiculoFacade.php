@@ -47,5 +47,28 @@ class VeiculoFacade{
         return $collectionVeiculo;
     }
 
-   
+    public function excluirVeiculo($codigoVeiculo){
+
+        DAOFactory::getDAOFactory();
+        
+        $objVeiculoDAO  = new  VeiculoDAO();
+
+        try {
+            DAOFactory::$connection->pdo->beginTransaction();
+
+            $objVeiculoDAO->excluirVeiculo($codigoVeiculo);
+
+            DAOFactory::$connection->pdo->commit();
+			DAOFactory::$connection->closePDO();
+        } catch (Exception $e) {
+            DAOFactory::$connection->pdo->rollBack();
+			DAOFactory::$connection->closePDO();
+            throw new Exception($e);
+        }
+        return true;
+    }
+
+    
+
+
 }

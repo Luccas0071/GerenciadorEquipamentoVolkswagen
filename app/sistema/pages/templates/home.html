@@ -1,4 +1,6 @@
+
 <script>
+   
     function mostrarAquivo(){
 
         formDados = new FormData(document.getElementById('arquivoForm'));
@@ -49,39 +51,38 @@
         jQuery("#fade").slideUp("hide");
     }
 
+    function pesquisarInfoVeiculo(element){
+        var codigoVeiculo = jQuery(element).val();
+        window.location = "index.php?do=index&action=inicio&codigoVeiculo=" + codigoVeiculo;
+    }
+
 </script>
 
 {include file="include/header.html"}
 {include file="include/menu.html"}
 
-<!-- Modal -->
-<!-- <div id="fade" style="display: none"></div>
-<div id="modal" style="display: none">
-    <div class="modal-header">
-        <h2>Conteudo Arquivo</h2>
-        <button id="import-modal" class="btn btn-primary" onclick="mostrarAquivo()"><i class="fa-sharp fa-solid fa-file-export"></i></button>
-        <button id="close-modal" class="btn btn-danger" onclick="removerModal()"><i class="fa-regular fa-circle-xmark"></i></button>
-    </div>
-    <div id="dadosArquivoModal" class="modal-body">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta aliquam ea, quibusdam ipsa est labore adipisci ducimus exercitationem molestias vitae ut voluptate itaque animi facere officiis aliquid totam velit praesentium.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui vel dolorum, laborum cupiditate veniam, nemo veritatis labore, deserunt rem asperiores amet excepturi! Velit officiis in quia quidem soluta repellat quod!
-    </div>
-</div> -->
 
+<input type="hidden" name="qtdEmCalibracao" 	id="qtdEmCalibracao"    value="{$qtdEmCalibracao}">
+<input type="hidden" name="qtdCalibrado" 	    id="qtdCalibrado" 		value="{$qtdCalibrado}">
+<input type="hidden" name="qtdNaoEncontrado" 	id="qtdNaoEncontrado"   value="{$qtdNaoEncontrado}">
 
 <!-- Conteudo -->
 <div class="container py-4">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <h3>Pesquisar</h3>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Veiculos</option>
-                {foreach item=objVeiculo from=$collectionVeiculo}										
-                    <option value="{$objVeiculo->getCodigo()}">{$objVeiculo->getNome()}</option>
+            <select class="form-select" aria-label="Default select example" onchange="pesquisarInfoVeiculo(this)">
+                <option value="0" selected>Selecione:</option>
+                {foreach item=objVeiculo from=$collectionVeiculo}			
+                    {if ($objVeiculoForm->getCodigo() == $objVeiculo->getCodigo())}
+                        <option value="{$objVeiculo->getCodigo()}" selected>{$objVeiculo->getNome()}</option>
+                    {else}											
+                        <option value="{$objVeiculo->getCodigo()}">{$objVeiculo->getNome()}</option>
+                    {/if} 							
                 {/foreach}
             </select>
         </div>
-        <div class="col-md-6" id="importarArquivo">
+        <div class="col-md-7" id="importarArquivo">
             <form action="" name="arquivoForm" id="arquivoForm">
                 <h3>Arquivo</h3>
                 <div class="input-group mb-3">
@@ -98,6 +99,9 @@
     </div>
 </div>
 
+
+{assign var="collectionEquipamento" value=$objPagina->getRegistros()}
+
 <div class="container p-1">
     <div class="row">
         <div class="col-md-5">
@@ -107,72 +111,103 @@
             </div>
         </div>
         <div class="col-md-7">
-            <div class="h-100 p-3 bg-light border rounded-3" style="text-align: center;">
-                <h2>Proxima da Calibragem</h2>
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Modela</td>
-                            <th scope="col">N° Série</td>
-                            <th scope="col">Data Calibragem</td>
-                            <th scope="col">Data Vencimento</td>
-                        </tr>
-                    </thead>
-                    <tdoby>
-                        {foreach item=objEquipamento from=$collectionEquipamento}
+            <div class="h-100 p-3 bg-light border rounded-3">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h3>Proxima da Calibragem  </h3>
+                    </div>
+                    <div  class="col-md-3 text-end">
+                        <button type="button" class="btn btn-outline-primary">Quantidade : {$objPagina->getQtdTotalRegistro()}</button>
+                    </div>
+                </div>
+                <br>
+                {if $objPagina->getRegistros() != 0}
+                    <table class="table">
+                        <thead class="thead-dark">
                             <tr>
-                                <td>{$objEquipamento->getModelo()}</td>
-                                <td>{$objEquipamento->getNumeroSerie()}</td>
-                                <td>{$objEquipamento->getDataCalibragem()}</td>
-                                <td>{$objEquipamento->getDataVencimento()}</td>
+                                <th scope="col">Modela</td>
+                                <th scope="col">N° Série</td>
+                                <th scope="col">Data Calibragem</td>
+                                <th scope="col">Data Vencimento</td>
                             </tr>
-                        {/foreach}
-                    </tdoby>
-                </table>
+                        </thead>
+                        <tdoby>
+                            {foreach item=objEquipamento from=$collectionEquipamento}
+                                <tr>
+                                    <td>{$objEquipamento->getModelo()}</td>
+                                    <td>{$objEquipamento->getNumeroSerie()}</td>
+                                    <td>{$objEquipamento->getDataCalibragem()}</td>
+                                    <td>{$objEquipamento->getDataVencimento()}</td>
+                                </tr>
+                            {/foreach}
+                        </tdoby>
+                    </table>
+                {else}
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Modela</td>
+                                <th scope="col">N° Série</td>
+                                <th scope="col">Data Calibragem</td>
+                                <th scope="col">Data Vencimento</td>
+                            </tr>
+                        </thead>
+                        <tdoby>
+                            <tr>
+                                <td>Nenhum registro encontrado !</td>
+                            </tr>
+                        </tdoby>
+                    </table>
+                {/if}
             </div>
         </div>
     </div>
 
-    <!-- <div class="p-5 mb-4 bg-light rounded-3">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Tacto</td>
-                    <th scope="col">Modelo</td>
-                    <th scope="col">N° Serie</td>
-                    <th scope="col">Vencimento</td>
-                    <th scope="col">Data Calibração</td>
-                    <th scope="col">Status</td>
-                    <th scope="col">Torque</td>
-                    <th scope="col">Ação</td>
-                </tr>
-            </thead>
-            <tdoby>
-                {foreach item=objPlanilha from=$collectionPlanilha}
-                     
-                    <tr>
-                        <td>{$objPlanilha->getTacto()}</td>
-                        <td>{$objPlanilha->getModelo()}</td>
-                        <td>{$objPlanilha->getNumeroSerie()}</td>
-                        <td>{$objPlanilha->getVenciamento()}</td>
-                        <td>{$objPlanilha->getDataCalibracao()}</td>
-                        <td>{$objPlanilha->getStatus()}</td>
-                        <td>{$objPlanilha->getTorque()}</td>
-                        <td>
-                            <button type="button" class="btn btn-warning">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    </tr>
-                {/foreach}
-            </tdoby>
-        </table>
-    </div> -->
-
-    
 </div>
 
 {include file="include/footer.html"}
+
+<!-- GRAFICO -->
+{literal}
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+    </script>
+{/literal}
+<script>
+    
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var qtdEmCalibracao   = parseInt(jQuery("#qtdEmCalibracao").val());
+        var qtdCalibrado      = parseInt(jQuery("#qtdCalibrado").val());
+        var qtdNaoEncontrado  = parseInt(jQuery("#qtdNaoEncontrado").val());
+
+        // console.log(qtdEmCalibracao);
+        // console.log(qtdCalibrado);
+        // console.log(qtdNaoEncontrado);
+
+        // var qtdEmCalibracao   = 1;
+        // var qtdCalibrado      = 2;
+        // var qtdNaoEncontrado  = 3;
+
+        var data = google.visualization.arrayToDataTable([
+            ['Status', 'Status'],
+            ['Em Calibragem',   qtdEmCalibracao],
+            ['Calibrado',       qtdCalibrado],
+            ['Não Encontrado',  qtdNaoEncontrado]
+        ]);
+
+        var options = {
+            backgroundColor: '#f8f9fa',
+            fontFamily: '102px',
+            is3D: true,
+
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+</script>

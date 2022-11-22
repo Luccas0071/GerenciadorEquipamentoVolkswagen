@@ -1,7 +1,7 @@
 <script>
 
-    function incluirColaborador(){
-        window.location = "index.php?do=colaborador&action=editar&acao=I";
+    function gerarRelatorio(){
+        window.location = "index.php?do=relatorio&action=gerarRelatorio";
     }
 
 
@@ -16,12 +16,12 @@
             <h3>Relatorio</h3>
         </div>
         <div class="col-2 texto-right">
-            <button type="button" class="btn btn-primary btn-sm" onclick="incluirColaborador()">
+            <button type="button" class="btn btn-primary btn-sm" onclick="gerarRelatorio()">
                 <i class="far fa-file-pdf"></i> Gerar Relatorio
             </button>
         </div>
         <hr>
-        <p>Lista de Colaboradores</p>
+        <p>Lista de Relatorios</p>
     </div>
 
         <div id="container">

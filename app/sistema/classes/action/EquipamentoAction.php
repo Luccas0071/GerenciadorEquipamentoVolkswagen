@@ -29,13 +29,20 @@ class EquipamentoAction
         $smarty                 = new Smarty();
         $objEquipamentoForm     = new EquipamentoForm();
         $objVeiculoFacade       = new VeiculoFacade();
+        $objEquipamentoFacade   = new EquipamentoFacade();
         $objSetorFacade         = new SetorFacade();
         $objColaboradorFacade   = new ColaboradorFacade();
         $objCombosFacade        = new ComboFacade();
 
         $acao = $get['acao'];
-
+        
         try {
+            if($acao != "I"){
+                $codigoEquipamento = $get['codigoEquipamento'];
+                $objEquipamento = $objEquipamentoFacade->obterEquipamento($codigoEquipamento);
+                $objEquipamentoForm->transfereModelForm($objEquipamento);
+            }
+
             $collectionColaborador = $objColaboradorFacade->listarColaborador();
             $smarty->assign("collectionColaborador", $collectionColaborador);
 
@@ -57,7 +64,7 @@ class EquipamentoAction
 
         $smarty->assign("objEquipamentoForm", $objEquipamentoForm);
 
-        if($acao == "I"){
+        if($acao == "I" || $acao == "A"){
             $smarty->display('templates/equipamento/editarEquipamento.html');
         }
         return true;
@@ -83,4 +90,42 @@ class EquipamentoAction
         return true;
     }
 
+    public function alterar($request){
+
+        $smarty                 = new Smarty();
+        $objEquipamentoForm     = new EquipamentoForm();
+        $objEquipamentoFacade   = new EquipamentoFacade();
+
+        try {
+            $objEquipamentoForm->transfereRequestForm($request);
+            $objEquipamento = $objEquipamentoForm->transfereFormModel();
+
+            $objEquipamentoFacade->alterarEquipamento($objEquipamento);
+           
+        } catch (Exception $e) {
+            $mensagem = $e;
+            throw new Exception("EquipamentoAction->incluir " . $e);
+        }
+
+        return true;
+    }
+
+    public function excluir($get){
+
+        $smarty             = new Smarty();
+        $objEquipamentoFacade   = new EquipamentoFacade();
+     
+        $codigoEquipamento = $get['codigoEquipamento'];
+
+        try {
+
+            $objEquipamentoFacade->excluirEquipamento($codigoEquipamento);
+           
+        } catch (Exception $e) {
+            $mensagem = $e;
+            throw new Exception("EquipamentoAction->excluir " . $e);
+        }
+
+        return true;
+    }
 }

@@ -4,34 +4,43 @@ include_once '../classes/dao/inicioDAO.php';
 
 class InicioAction
 {
-    public function start(){
+    public function inicio($get){
 
-        $objInicioFacade    = new InicioFacade();
-        $objVeiculoFacade   = new VeiculoFacade();
+        $smarty                 = new Smarty();
+        $objInicioFacade        = new InicioFacade();
+        $objVeiculoFacade       = new VeiculoFacade();
         $objEquipamentoFacade   = new EquipamentoFacade();
-        $smarty             = new Smarty();
+        $objVeiculoForm         = new VeiculoForm();
 
+        $codigoVeiculo = $get['codigoVeiculo'];
+        
         try {
             $collectionVeiculo = $objVeiculoFacade->listarVeiculo();
             $smarty->assign("collectionVeiculo", $collectionVeiculo);
 
-            $collectionEquipamento = $objEquipamentoFacade->listarEquipamento();
-            $smarty->assign("collectionEquipamento", $collectionEquipamento);
-            
-            // $collectionPlanilha = $objInicioFacade->listarDadosPlanilha();
-            $collectionPlanilha = "";
-            $smarty->assign("collectionPlanilha", $collectionPlanilha);
+            $objPagina = $objEquipamentoFacade->listarEquipamentoPorVeiculo($codigoVeiculo);
 
-            $smarty->assign("objArquivo", "Batara");
+            $arrayQtd = $objEquipamentoFacade->listarQtdEquipamentoPorSituacao($codigoVeiculo);
+
         } catch (Exception $e) {
-            throw new Exception("CourseAction->star " . $e);
+            throw new Exception("InicioAction->star " . $e);
         }
+
+        $objVeiculoForm->setCodigo($codigoVeiculo);
+
+        $smarty->assign("qtdEmCalibracao",      $arrayQtd['qtdEmCalibracao']);
+        $smarty->assign("qtdCalibrado",         $arrayQtd['qtdCalibrado']);
+        $smarty->assign("qtdNaoEncontrado",     $arrayQtd['qtdNaoEncontrado']);
+
+        $smarty->assign("objPagina", $objPagina);
+        $smarty->assign("objVeiculoForm", $objVeiculoForm);
 
         $smarty->display('templates/home.html');
 	}
 
     public function editar(){
-	
+        $smarty                 = new Smarty();
+        $smarty->display('templates/home.html');
 	}
 
     public function incluir(){

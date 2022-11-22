@@ -5,6 +5,7 @@ class Setor{
     private $codigo;
     private $nome;
     private $dataInclusao;
+    private $objVeiculo;
 
     public function getCodigo()
     {
@@ -38,6 +39,18 @@ class Setor{
     public function setDataInclusao($dataInclusao)
     {
         $this->dataInclusao = $dataInclusao;
+
+        return $this;
+    }
+
+    public function getObjVeiculo()
+    {
+        return $this->objVeiculo;
+    }
+
+    public function setObjVeiculo($objVeiculo)
+    {
+        $this->objVeiculo = $objVeiculo;
 
         return $this;
     }

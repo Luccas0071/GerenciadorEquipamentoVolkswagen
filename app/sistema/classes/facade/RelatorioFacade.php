@@ -25,16 +25,32 @@ class RelatorioFacade{
         return true;
     }
 
-    public function listarColaborador(){
+    public function gerarRelatorio(){
 
         DAOFactory::getDAOFactory();
         
+        $objEquipamentoDAO  = new  EquipamentoDAO();
         $objColaboradorDAO  = new  ColaboradorDAO();
 
         try {
             DAOFactory::$connection->pdo->beginTransaction();
 
-            $collectionColaborador = $objColaboradorDAO->listarColaborador();
+            $collectionEquipamento = $objEquipamentoDAO->listarEquipamento();
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            print_r($collectionEquipamento);
+            exit;
 
             DAOFactory::$connection->pdo->commit();
 			DAOFactory::$connection->closePDO();
@@ -44,7 +60,7 @@ class RelatorioFacade{
             throw new Exception($e);
         }
 
-        return $collectionColaborador;
+        return true;
     }
 
    

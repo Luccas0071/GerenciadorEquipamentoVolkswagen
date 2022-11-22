@@ -24,10 +24,10 @@
                     <td>{$objStatus->getdescricao()}</td>
                     <td>{$objEquipamento->getDataCalibragem()}</td>
                     <td>
-                        <button type="button" class="btn btn-warning">
+                        <button type="button" class="btn btn-warning" onclick="editarEquipamento('{$objEquipamento->getCodigo()}')">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger" onclick="excluirEquipamento('{$objEquipamento->getCodigo()}')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>

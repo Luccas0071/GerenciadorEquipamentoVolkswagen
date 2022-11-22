@@ -60,7 +60,7 @@ class  VeiculoForm {
 
         $this->setCodigo($request['codigoVeiculo']);
         $this->setNome($request['nomeVeiculo']);
-        $this->setDataInclusao($request['dataVeiculo']);
+        $this->setDataInclusao($request['dataInclusaoVeiculo']);
 
     }
 

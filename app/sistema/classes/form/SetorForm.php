@@ -6,6 +6,7 @@ class  SetorForm {
     private $codigo;
     private $nome;
     private $dataInclusao;
+    private $codigoVeiculo;
 
     public function getAcao()
     {
@@ -55,12 +56,23 @@ class  SetorForm {
         return $this;
     }
 
+    public function getCodigoVeiculo()
+    {
+        return $this->codigoVeiculo;
+    }
  
+    public function setCodigoVeiculo($codigoVeiculo)
+    {
+        $this->codigoVeiculo = $codigoVeiculo;
+
+        return $this;
+    }
   
     public function transfereRequestForm($request){
         $this->setCodigo($request['codigoSetor']);
-        $this->setNome($request['nomeSetor']);
-        $this->setDataInclusao($request['dataSetor']);
+        $this->setNome($request['nome']);
+        $this->setDataInclusao($request['dataInclusaoSetor']);
+        $this->setCodigoVeiculo($request['codigoVeiculo']);
     }
 
     public function transfereFormModel(){
@@ -69,9 +81,14 @@ class  SetorForm {
         $objSetor->setCodigo($this->getCodigo());
         $objSetor->setNome($this->getNome());
         $objSetor->setDataInclusao($this->getDataInclusao());
+        $objSetor->setObjVeiculo(new Veiculo());
+        $objSetor->getObjVeiculo()->setCodigo($this->getCodigoVeiculo());
 
         return $objSetor;
     }
  
    
+
+
+
 }

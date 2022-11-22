@@ -5,30 +5,26 @@ include_once '../classes/dao/VeiculoDAO.php';
 class VeiculoAction
 {
     public function inicio(){
-
         $smarty             = new Smarty();
-        $objColaboradorForm     = new ColaboradorForm();
-        $objColaboradorFacade   = new ColaboradorFacade();
+        $objVeiculoForm     = new VeiculoForm();
+        $objVeiculoFacade   = new VeiculoFacade();
 
         try {
-            $collectionColaborador = $objColaboradorFacade->listarColaborador();
-            $smarty->assign("collectionColaborador", $collectionColaborador);
+            $collectionVeiculo = $objVeiculoFacade->listarVeiculo();
+            $smarty->assign("collectionVeiculo", $collectionVeiculo);
 
         } catch (Exception $e) {
             $mensagem = $e;
-            throw new Exception("ColaboradorAction->inicio " . $e);
+            throw new Exception("VeiculoAction->inicio " . $e);
         }
-
-        $smarty->display('templates/colaborador/pesquisarColaborador.html');
-
-        return true;
+        $smarty->display('templates/veiculo/pesquisarVeiculo.html');
 	}
     
     public function editar($get){
 
         $smarty             = new Smarty();
-        $objColaboradorForm     = new ColaboradorForm();
-        $objColaboradorFacade   = new ColaboradorFacade();
+        $objVeiculoForm     = new VeiculoForm();
+        $objVeiculoFacade   = new VeiculoFacade();
 
         $acao = $get['acao'];
 
@@ -38,17 +34,17 @@ class VeiculoAction
 
         } catch (Exception $e) {
             $mensagem = $e;
-            throw new Exception("ColaboradorAction->inicio " . $e);
+            throw new Exception("VeiculoAction->editar " . $e);
         }
 
   
 
-        $objColaboradorForm->setAcao($acao);
+        $objVeiculoForm->setAcao($acao);
 
-        $smarty->assign("objColaboradorForm", $objColaboradorForm);
+        $smarty->assign("objVeiculoForm", $objVeiculoForm);
 
         if($acao == "I"){
-            $smarty->display('templates/colaborador/editarColaborador.html');
+            $smarty->display('templates/veiculo/editarVeiculo.html');
         }
         return true;
     }
@@ -62,7 +58,7 @@ class VeiculoAction
         try {
             $objVeiculoForm->transfereRequestForm($request);
             $objVeiculo = $objVeiculoForm->transfereFormModel();
-
+  
             $objVeiculoFacade->incluirVeiculo($objVeiculo);
            
         } catch (Exception $e) {
@@ -72,5 +68,26 @@ class VeiculoAction
 
         return true;
     }
+
+    public function excluir($get){
+
+        $smarty             = new Smarty();
+        $objVeiculoFacade   = new VeiculoFacade();
+     
+        $codigoVeiculo = $get['codigoVeiculo'];
+
+        try {
+
+            $objVeiculoFacade->excluirVeiculo($codigoVeiculo);
+           
+        } catch (Exception $e) {
+            $mensagem = $e;
+            throw new Exception("VeiculoAction->excluir " . $e);
+        }
+
+        return true;
+    }
+
+    
 
 }

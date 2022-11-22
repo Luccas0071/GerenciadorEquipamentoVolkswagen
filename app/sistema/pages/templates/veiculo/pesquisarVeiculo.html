@@ -1,35 +1,36 @@
 <script>
 
-    function incluirEquipamento(){
-        window.location = "index.php?do=equipamento&action=editar&acao=I";
+    function incluirVeiculo(){
+        window.location = "index.php?do=veiculo&action=editar&acao=I";
     }
 
-    function editarEquipamento(codigoEquipamento){
-        window.location = "index.php?do=equipamento&action=editar&acao=A&codigoEquipamento=" + codigoEquipamento;
+    function editarVeiculo(codigoVeiculo){
+        window.location = "index.php?do=veiculo&action=editar&acao=A&codigoVeiculo=" + codigoVeiculo;
     }
 
-    function excluirEquipamento(codigoEquipamento){
+    function excluirVeiculo(codigoVeiculo){
 
-        var resposta = confirm("Deseja realmente excluir este equipamento !");
+        var resposta = confirm("Deseja realmente excluir este veiculo !");
 
         if(resposta == true){
 
-            var urlAction = "index.php?do=equipamento&action=excluir";
+            var urlAction = "index.php?do=veiculo&action=excluir";
 
             jQuery.ajax({
                 type: 'GET',
                 url: urlAction,
                 data: {
-                    'codigoEquipamento':codigoEquipamento
+                    'codigoVeiculo':codigoVeiculo
                 },
                 success: function (data) {
                     console.log(data);
-                    window.location = "index.php?do=equipamento&action=inicio";
-                    alert("Equipamento excluido com Sucesso !")
+                    window.location = "index.php?do=veiculo&action=inicio";
+                    alert("Veiculo excluido com Sucesso !")
                 }
             });
         }
     }
+
 
 </script>
 
@@ -39,21 +40,20 @@
 <div class="container">
     <div class="row">
         <div class="col-11">
-            <h3>Equipamentos</h3>
+            <h3>Veiculos</h3>
         </div>
         <div class="col-1">
-            <button type="button" class="btn btn-primary btn-sm" onclick="incluirEquipamento()">
+            <button type="button" class="btn btn-primary btn-sm" onclick="incluirVeiculo()">
                 <i class="fa-solid fa-plus"></i> Incluir
             </button>
         </div>
         <hr>
-        <p>Lista de Equipamentos</p>
+        <p>Lista de Veiculos</p>
     </div>
 
         <div id="container">
             <div class="row">
                 <div class="row align-items-start form-group">
-                    
                     <div class="col-3">
                         <div class="padding-padrao">
                             <label for="title" title="Titulo" class="text-ellipsis">Nome:</label>
@@ -70,7 +70,7 @@
             </div>
         </div>
           <br>
-        {include file="equipamento/listarEquipamento.html"}
+        {include file="veiculo/listarVeiculo.html"}
   
 </div>
 

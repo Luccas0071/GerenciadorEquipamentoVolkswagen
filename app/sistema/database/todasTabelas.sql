@@ -110,5 +110,9 @@ CREATE TABLE IF NOT EXISTS gerenciador.tb_setor
 );
 
 
-
+ALTER TABLE gerenciador.tb_setor ADD COLUMN vei_codigo integer, 
+ADD CONSTRAINT fk_tb_setor_tb_veiculo FOREIGN KEY (vei_codigo)
+REFERENCES gerenciador.tb_veiculo (vei_codigo) MATCH SIMPLE 
+ON UPDATE NO ACTION 
+ON DELETE NO ACTION
 

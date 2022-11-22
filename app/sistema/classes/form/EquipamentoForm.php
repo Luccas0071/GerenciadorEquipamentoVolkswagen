@@ -253,6 +253,7 @@ class  EquipamentoForm {
    
     public function transfereRequestForm($request){
 
+        $this->setCodigo($request['codigoEquipamento']);
         $this->setTacto($request['tacto']);
         $this->setTipoFrequencia($request['tipoFrequencia']);
         $this->setModelo($request['modelo']);
@@ -275,6 +276,7 @@ class  EquipamentoForm {
     public function transfereFormModel(){
         $objEquipamento = new Equipamento();
 
+        $objEquipamento->setCodigo($this->getCodigo());
         $objEquipamento->setTacto($this->getTacto());
         $objEquipamento->setTipoFrequencia($this->getTipoFrequencia());
         $objEquipamento->setModelo($this->getModelo());
@@ -299,6 +301,28 @@ class  EquipamentoForm {
         $objEquipamento->getObjVeiculo()->setCodigo($this->getVeiculo());
 
         return $objEquipamento;
+    }
+
+    public function transfereModelForm($objEquipamento)
+    {
+        $this->setCodigo($objEquipamento->getCodigo());
+        $this->setTacto($objEquipamento->getTacto());
+        $this->setTipoFrequencia($objEquipamento->getTipoFrequencia());
+        $this->setModelo($objEquipamento->getModelo());
+        $this->setNumeroSerie($objEquipamento->getNumeroSerie());
+        $this->setDataVencimento($objEquipamento->getDataVencimento());
+        $this->setStatus($objEquipamento->getObjStatus()->getCodigo());
+        $this->setTorque($objEquipamento->getTorque());
+        $this->setDescricaoOperacao($objEquipamento->getDescricaoOperacao());
+        $this->setColaborador($objEquipamento->getObjColaborador()->getCodigo());
+        $this->setDataCalibragem($objEquipamento->getDataCalibragem());
+        $this->setDadosUtimaCalibragem($objEquipamento->getDadosUtimaCalibragem());
+        $this->setMedia($objEquipamento->getMedia());
+        $this->setDispersao($objEquipamento->getDispersao());
+        $this->setObservacao($objEquipamento->getObservacao());
+        $this->setQtdDiasVencimento($objEquipamento->getQtdDiasVencimento());
+        $this->setVeiculo($objEquipamento->getObjVeiculo()->getCodigo());
+        $this->setSetor($objEquipamento->getObjSetor()->getCodigo());
     }
  
   

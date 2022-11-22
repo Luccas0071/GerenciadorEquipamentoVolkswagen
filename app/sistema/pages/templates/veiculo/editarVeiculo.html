@@ -1,0 +1,87 @@
+
+<script>
+
+    function salvarVeiculo(){
+        var acao = jQuery("#acao").val();
+
+        if (acao == "I") {
+			var urlAction = "index.php?do=veiculo&action=incluir";
+		}else{
+			var urlAction = "index.php?do=veiculo&action=alterar";
+		}
+
+        formDados = new FormData(document.getElementById('frmVeiculo'));
+
+		jQuery.ajax({
+			type: 'POST',
+			url: urlAction,
+			data: formDados,
+			success: function (data) {
+				console.log(data);
+                redirecionar()
+                alert("Veiculo Incluido com Sucesso !")
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+    }
+
+    function redirecionar(){
+        window.location = "index.php?do=veiculo&action=inicio";
+    }
+
+</script>
+
+{include file="include/header.html"}
+{include file="include/menu.html"}
+
+<div class="container">
+    <div class="row">
+        <div class="col-11">
+            <div class="padding-padrao">
+                <h2>Cadastrar Veiculo</h2>
+            </div>
+        </div>
+
+        <div class="col-1">
+            <div class="padding-padrao texto-right">    
+                <button type="button" name="btn-incluir" id="btn-incluir" class="btn btn-primary btn-sm" onclick="salvarVeiculo();">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row align-items-start">
+        <div class="col-12">
+            <p class="font-weight-light">Preencha os campos abaixo para cadastrar um novo Veiculo !</p>	
+        </div>  
+    </div>
+         
+    <form name="frmVeiculo" id="frmVeiculo">
+        <input type="hidden" name="acao" 			    id="acao" 				value="{$objVeiculoForm->getAcao()}">
+        <input type="hidden" name="codigoVeiculo" 	    id="codigoVeiculo" 		value="{$objVeiculoForm->getCodigo()}">
+        
+    
+        <div class="row align-items-start">
+            <div class="col-3">
+                <div class="padding-padrao">
+                    <label for="nomeVeiculo" title="Código Unico" class="text-ellipsis">Nome:</label>
+                    <input type="text" name="nomeVeiculo" id="nomeVeiculo" class="nomeVeiculo form-control form-control-sm" value="{$objVeiculoForm->getNome()}" >
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="padding-padrao">
+                    <label for="dataInclusaoVeiculo" title="Data Inclusão" class="text-ellipsis">Data Inclusão:</label>
+                    <input type="date" name="dataInclusaoVeiculo" id="dataInclusaoVeiculo" class="dataInclusaoVeiculo form-control form-control-sm" value="{$objVeiculoForm->getDataInclusao()}" >
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{include file="include/footer.html"}

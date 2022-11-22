@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-15 17:17:22
+/* Smarty version 4.0.0, created on 2022-11-20 13:53:07
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\equipamento\editarEquipamento.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_6373bb92693836_36636580',
+  'unifunc' => 'content_637a2333aff3b6_91375770',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '75bcd4787ae2851f142b22d2117d573859d7b961' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\equipamento\\editarEquipamento.html',
-      1 => 1668529038,
+      1 => 1668948750,
       2 => 'file',
     ),
   ),
@@ -23,7 +23,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_6373bb92693836_36636580 (Smarty_Internal_Template $_smarty_tpl) {
+function content_637a2333aff3b6_91375770 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
 
@@ -44,8 +44,8 @@ echo '<script'; ?>
 			data: formDados,
 			success: function (data) {
 				console.log(data);
-                // redirecionar()
-                // alert("Equipamento Incluido com Sucesso !")
+                redirecionar()
+                alert("Equipamento Incluido com Sucesso !")
 			},
 			cache: false,
 			contentType: false,
