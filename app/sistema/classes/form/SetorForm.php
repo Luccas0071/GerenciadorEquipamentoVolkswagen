@@ -87,7 +87,13 @@ class  SetorForm {
         return $objSetor;
     }
  
-   
+    public function transfereModelForm($objSetor)
+    {
+        $this->setCodigo($objSetor->getCodigo());
+        $this->setNome($objSetor->getNome());
+        $this->setDataInclusao($objSetor->getDataInclusao());
+        $this->setCodigoVeiculo($objSetor->getObjVeiculo()->getCodigo());
+    }
 
 
 

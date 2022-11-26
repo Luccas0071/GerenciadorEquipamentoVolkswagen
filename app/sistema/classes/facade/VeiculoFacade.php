@@ -68,7 +68,47 @@ class VeiculoFacade{
         return true;
     }
 
-    
+    public function obterVeiculo($codigoVeiculo){
+
+        DAOFactory::getDAOFactory();
+        
+        $objVeiculoDAO  = new  VeiculoDAO();
+
+        try {
+            DAOFactory::$connection->pdo->beginTransaction();
+
+            $objVeiculo = $objVeiculoDAO->obterVeiculo($codigoVeiculo);
+
+            DAOFactory::$connection->pdo->commit();
+			DAOFactory::$connection->closePDO();
+        } catch (Exception $e) {
+            DAOFactory::$connection->pdo->rollBack();
+			DAOFactory::$connection->closePDO();
+            throw new Exception($e);
+        }
+        return $objVeiculo;
+    }
+
+    public function alterarVeiculo($objVeiculo){
+
+        DAOFactory::getDAOFactory();
+        
+        $objVeiculoDAO  = new  VeiculoDAO();
+
+        try {
+            DAOFactory::$connection->pdo->beginTransaction();
+
+            $objVeiculoDAO->alterarVeiculo($objVeiculo);
+
+            DAOFactory::$connection->pdo->commit();
+			DAOFactory::$connection->closePDO();
+        } catch (Exception $e) {
+            DAOFactory::$connection->pdo->rollBack();
+			DAOFactory::$connection->closePDO();
+            throw new Exception($e);
+        }
+        return true;
+    }
 
 
 }

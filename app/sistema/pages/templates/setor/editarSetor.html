@@ -18,8 +18,12 @@
 			data: formDados,
 			success: function (data) {
 				console.log(data);
-                // redirecionar()
-                // alert("Colaborador Incluido com Sucesso !")
+                redirecionar()
+                if(acao == "I"){
+                    alert("Setor Incluido com Sucesso !")
+                }else{
+                    alert("Setor Alterado com Sucesso !")
+                }
 			},
 			cache: false,
 			contentType: false,

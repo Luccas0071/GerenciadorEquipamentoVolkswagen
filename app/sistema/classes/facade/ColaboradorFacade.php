@@ -47,5 +47,66 @@ class ColaboradorFacade{
         return $collectionColaborador;
     }
 
-   
+    public function obterColaborador($codigoColaborador){
+
+        DAOFactory::getDAOFactory();
+        
+        $objColaboradorDAO  = new  ColaboradorDAO();
+
+        try {
+            DAOFactory::$connection->pdo->beginTransaction();
+
+            $objColaborador = $objColaboradorDAO->obterColaborador($codigoColaborador);
+
+            DAOFactory::$connection->pdo->commit();
+			DAOFactory::$connection->closePDO();
+        } catch (Exception $e) {
+            DAOFactory::$connection->pdo->rollBack();
+			DAOFactory::$connection->closePDO();
+            throw new Exception($e);
+        }
+        return $objColaborador;
+    }
+
+    public function alterarColaborador($objColaborador){
+
+        DAOFactory::getDAOFactory();
+        
+        $objColaboradorDAO  = new  ColaboradorDAO();
+
+        try {
+            DAOFactory::$connection->pdo->beginTransaction();
+
+            $objColaboradorDAO->alterarColaborador($objColaborador);
+
+            DAOFactory::$connection->pdo->commit();
+			DAOFactory::$connection->closePDO();
+        } catch (Exception $e) {
+            DAOFactory::$connection->pdo->rollBack();
+			DAOFactory::$connection->closePDO();
+            throw new Exception($e);
+        }
+        return true;
+    }
+
+    public function excluirColaborador($codigoColaborador){
+
+        DAOFactory::getDAOFactory();
+        
+        $objColaboradorDAO  = new  ColaboradorDAO();
+
+        try {
+            DAOFactory::$connection->pdo->beginTransaction();
+
+            $objColaboradorDAO->excluirColaborador($codigoColaborador);
+
+            DAOFactory::$connection->pdo->commit();
+			DAOFactory::$connection->closePDO();
+        } catch (Exception $e) {
+            DAOFactory::$connection->pdo->rollBack();
+			DAOFactory::$connection->closePDO();
+            throw new Exception($e);
+        }
+        return true;
+    }
 }

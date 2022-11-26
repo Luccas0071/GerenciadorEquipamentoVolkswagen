@@ -65,6 +65,102 @@ class ColaboradorDAO extends DAOFactory{
         return $colectionColaborador;
     }
 
+	public function obterColaborador($codigoColaborador){
+
+		$sql  = " SELECT ";
+		$sql .= " col_codigo, ";
+		$sql .= " col_nome,	";
+		$sql .= " col_data_admissao, ";
+		$sql .= " col_funcao ";
+		$sql .= " FROM gerenciador.tb_colaborador ";
+		$sql .= " WHERE col_codigo = :codigoColaborador ";
+		
+        $query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoColaborador', 	$codigoColaborador, PDO::PARAM_STR);
+
+		if ($query->execute()) {
+            $rs = $query->fetch(PDO::FETCH_ASSOC);
+
+			$objColaborador = new Colaborador();
+
+			$objColaborador->setCodigo($rs['col_codigo']);
+			$objColaborador->setNome($rs['col_nome']);
+			$objColaborador->setDataAdmissao($rs['col_data_admissao']);
+			$objColaborador->setFuncao($rs['col_funcao']);
+        } else {
+            $collectionErro = $query->errorInfo();
+            throw new Exception("ColaboradorDAO->obterColaborador " . $collectionErro[2]);
+        }
+        return $objColaborador;
+    }
+
+	public function alterarColaborador($objColaborador){
+
+		
+		$sql = " UPDATE gerenciador.tb_colaborador SET  ";
+		$sql .= " col_nome = 			:nome, ";
+		$sql .= " col_data_admissao = 	:dataAdmissao, ";
+		$sql .= " col_funcao = 			:funcao ";
+		$sql .= " WHERE col_codigo =  	:codigoColaborador ";
+
+		$query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoColaborador', $objColaborador->getCodigo(), 		PDO::PARAM_INT);
+		$query->bindParam(':nome', 				$objColaborador->getNome(), 		PDO::PARAM_STR);
+        $query->bindParam(':dataAdmissao', 		$objColaborador->getDataAdmissao(), PDO::PARAM_STR);
+        $query->bindParam(':funcao', 			$objColaborador->getFuncao(), 		PDO::PARAM_STR);
+   
+
+		if (!$query->execute()) {
+			$collectionErro = $query->errorInfo();
+			throw new Exception("ColaboradorDAO->alterarColaborador " . $collectionErro[2]);
+		}
+		return true;
+    }
+
+	public function excluirColaborador($codigoColaborador){
+
+		$sql  = "DELETE FROM ";
+		$sql .= "	gerenciador.tb_colaborador ";
+		$sql .= " WHERE ";
+		$sql .= "   col_codigo = :codigoColaborador ";
+
+		$query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoColaborador', $codigoColaborador, PDO::PARAM_INT);
+
+		if (!$query->execute()) {
+			$collectionErro = $query->errorInfo();
+			throw new Exception("ColaboradorDAO->excluirColaborador " . $collectionErro[2]);
+		}
+		return true;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // public function listContents($idModule){
     //     $collectionContents = array();
 

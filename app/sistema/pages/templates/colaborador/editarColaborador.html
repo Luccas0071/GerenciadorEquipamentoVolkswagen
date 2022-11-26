@@ -19,7 +19,11 @@
 			success: function (data) {
 				console.log(data);
                 redirecionar()
-                alert("Colaborador Incluido com Sucesso !")
+                if(acao == "I"){
+                    alert("Colaborador Incluido com Sucesso !")
+                }else{
+                    alert("Colaborador Alterado com Sucesso !")
+                }
 			},
 			cache: false,
 			contentType: false,

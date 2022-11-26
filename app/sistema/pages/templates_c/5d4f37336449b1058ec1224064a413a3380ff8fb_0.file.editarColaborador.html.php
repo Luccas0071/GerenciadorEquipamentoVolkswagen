@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-15 21:33:25
+/* Smarty version 4.0.0, created on 2022-11-26 15:02:18
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\colaborador\editarColaborador.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_6373f7950f64c7_35336787',
+  'unifunc' => 'content_63821c6a0c35d2_53246889',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5d4f37336449b1058ec1224064a413a3380ff8fb' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\colaborador\\editarColaborador.html',
-      1 => 1668544402,
+      1 => 1669471318,
       2 => 'file',
     ),
   ),
@@ -23,7 +23,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_6373f7950f64c7_35336787 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63821c6a0c35d2_53246889 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
 
@@ -45,7 +45,11 @@ echo '<script'; ?>
 			success: function (data) {
 				console.log(data);
                 redirecionar()
-                alert("Colaborador Incluido com Sucesso !")
+                if(acao == "I"){
+                    alert("Colaborador Incluido com Sucesso !")
+                }else{
+                    alert("Colaborador Alterado com Sucesso !")
+                }
 			},
 			cache: false,
 			contentType: false,

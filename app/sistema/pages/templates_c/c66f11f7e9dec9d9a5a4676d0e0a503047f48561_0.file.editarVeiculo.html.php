@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-22 00:45:25
+/* Smarty version 4.0.0, created on 2022-11-26 15:31:18
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\veiculo\editarVeiculo.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_637c0d959ac270_84044215',
+  'unifunc' => 'content_63822336477b56_10800519',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'c66f11f7e9dec9d9a5a4676d0e0a503047f48561' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\veiculo\\editarVeiculo.html',
-      1 => 1669074318,
+      1 => 1669473073,
       2 => 'file',
     ),
   ),
@@ -23,7 +23,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_637c0d959ac270_84044215 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63822336477b56_10800519 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
 
@@ -44,8 +44,12 @@ echo '<script'; ?>
 			data: formDados,
 			success: function (data) {
 				console.log(data);
-                // redirecionar()
-                // alert("Veiculo Incluido com Sucesso !")
+                redirecionar()
+                if(acao == "I"){
+                    alert("Veiculo Incluido com Sucesso !")
+                }else{
+                    alert("Veiculo Alterado com Sucesso !")
+                }
 			},
 			cache: false,
 			contentType: false,

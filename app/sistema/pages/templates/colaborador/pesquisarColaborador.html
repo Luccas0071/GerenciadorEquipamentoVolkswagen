@@ -4,6 +4,33 @@
         window.location = "index.php?do=colaborador&action=editar&acao=I";
     }
 
+    function editarColaborador(codigoColaborador){
+        window.location = "index.php?do=colaborador&action=editar&acao=A&codigoColaborador=" + codigoColaborador;
+    }
+
+    function excluirColaborador(codigoColaborador){
+
+        var resposta = confirm("Deseja realmente excluir este colaborador !");
+
+        if(resposta == true){
+
+            var urlAction = "index.php?do=colaborador&action=excluir";
+
+            jQuery.ajax({
+                type: 'GET',
+                url: urlAction,
+                data: {
+                    'codigoColaborador':codigoColaborador
+                },
+                success: function (data) {
+                    console.log(data);
+                    window.location = "index.php?do=colaborador&action=inicio";
+                    alert("Colaborador excluido com Sucesso !")
+                }
+            });
+        }
+    }
+
 
 </script>
 

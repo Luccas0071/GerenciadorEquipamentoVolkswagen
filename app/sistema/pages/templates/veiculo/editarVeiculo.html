@@ -19,7 +19,11 @@
 			success: function (data) {
 				console.log(data);
                 redirecionar()
-                alert("Veiculo Incluido com Sucesso !")
+                if(acao == "I"){
+                    alert("Veiculo Incluido com Sucesso !")
+                }else{
+                    alert("Veiculo Alterado com Sucesso !")
+                }
 			},
 			cache: false,
 			contentType: false,

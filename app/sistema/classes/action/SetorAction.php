@@ -34,6 +34,13 @@ class SetorAction
         $acao = $get['acao'];
 
         try {
+
+            if($acao != "I"){
+                $codigoSetor = $get['codigoSetor'];
+                $objSetor = $objSetorFacade->obterSetor($codigoSetor);
+                $objSetorForm->transfereModelForm($objSetor);
+            }
+
             $collectionVeiculo = $objVeiculoFacade->listarVeiculo();
             $smarty->assign("collectionVeiculo", $collectionVeiculo);
 
@@ -46,7 +53,7 @@ class SetorAction
 
         $smarty->assign("objSetorForm", $objSetorForm);
 
-        if($acao == "I"){
+        if($acao == "I" || $acao == "A"){
             $smarty->display('templates/setor/editarSetor.html');
         }
         return true;
@@ -71,5 +78,44 @@ class SetorAction
 
         return true;
     }
+
+    public function alterar($request){
+
+        $smarty           = new Smarty();
+        $objSetorForm     = new SetorForm();
+        $objSetorFacade   = new SetorFacade();
+
+        try {
+            $objSetorForm->transfereRequestForm($request);
+            $objSetor = $objSetorForm->transfereFormModel();
+
+            $objSetorFacade->alterarSetor($objSetor);
+           
+        } catch (Exception $e) {
+            $mensagem = $e;
+            throw new Exception("SetorAction->alterar " . $e);
+        }
+        return true;
+    }
+
+    public function excluir($get){
+
+        $smarty             = new Smarty();
+        $objVeiculoFacade   = new VeiculoFacade();
+     
+        $codigoVeiculo = $get['codigoVeiculo'];
+
+        try {
+
+            $objVeiculoFacade->excluirVeiculo($codigoVeiculo);
+           
+        } catch (Exception $e) {
+            $mensagem = $e;
+            throw new Exception("VeiculoAction->excluir " . $e);
+        }
+
+        return true;
+    }
+
 
 }

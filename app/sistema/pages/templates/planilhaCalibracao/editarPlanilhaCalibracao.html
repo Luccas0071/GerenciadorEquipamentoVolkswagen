@@ -1,0 +1,94 @@
+<script>
+
+    function salvarPlanilhaCalibracao(){
+        var acao = jQuery("#acao").val();
+
+        if (acao == "I") {
+			var urlAction = "index.php?do=planilhaCalibracao&action=incluir";
+		}else{
+			var urlAction = "index.php?do=planilhaCalibracao&action=alterar";
+		}
+
+        formDados = new FormData(document.getElementById('frmColaborador'));
+
+		jQuery.ajax({
+			type: 'POST',
+			url: urlAction,
+			data: formDados,
+			success: function (data) {
+				console.log(data);
+                redirecionar()
+                if(acao == "I"){
+                    alert("Planilha Calibracao Incluido com Sucesso !")
+                }else{
+                    alert("Planilha Calibracao Alterado com Sucesso !")
+                }
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+    }
+
+    function redirecionar(){
+        window.location = "index.php?do=colaborador&action=inicio";
+    }
+
+</script>
+
+
+{include file="include/header.html"}
+{include file="include/menu.html"}
+
+<div class="container">
+    <div class="row">
+        <div class="col-11">
+            <div class="padding-padrao">
+                <h2>Alterar Planilha Calibragem</h2>
+            </div>
+        </div>
+
+        <div class="col-1">
+            <div class="padding-padrao texto-right">    
+                <button type="button" name="btn-incluir" id="btn-incluir" class="btn btn-primary btn-sm" onclick="salvarPlanilhaCalibracao();">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row align-items-start">
+        <div class="col-12">
+            <p class="font-weight-light">Preencha os campos abaixo para alterar a planilha calibragem !</p>	
+        </div>  
+    </div>
+         
+    <form name="frmColaborador" id="frmColaborador">
+        <input type="hidden" name="acao" 				id="acao" 				    value="{$objPlanilhaCalibracaoForm->getAcao()}">
+        <input type="hidden" name="codigoColaborador" 	id="codigoColaborador" 		value="{$objPlanilhaCalibracaoForm->getCodigo()}">
+        
+    
+        <div class="row align-items-start">
+            <div class="col-4">
+                <div class="padding-padrao">
+                    <label for="nome" title="Código Unico" class="text-ellipsis">Nome:</label>
+                    <input type="text" name="nome" id="nome" class="nome form-control form-control-sm" value="{$objPlanilhaCalibracaoForm->getNome()}" >
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="padding-padrao">
+                    <label for="dataInclusao" title="Data Admissão" class="text-ellipsis">Data Inclusao:</label>
+                    <input type="date" name="dataInclusao" id="dataInclusao" class="dataInclusao form-control form-control-sm" value="{$objPlanilhaCalibracaoForm->getDataInclusao()}" >
+                </div>
+            </div>
+        </div>
+
+        <br>
+        {include file="planilhaCalibracao/listarItemPlanilhaCalibracao.html"}
+
+    </form>
+</div>
+
+{include file="include/footer.html"}

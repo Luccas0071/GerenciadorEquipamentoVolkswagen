@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-13 01:24:16
+/* Smarty version 4.0.0, created on 2022-11-26 14:28:24
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\colaborador\pesquisarColaborador.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_63703930470363_29059324',
+  'unifunc' => 'content_6382147887e852_84407073',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'bde900486c85f911dcdf49025e66c99e2712eb2b' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\colaborador\\pesquisarColaborador.html',
-      1 => 1668299053,
+      1 => 1669469048,
       2 => 'file',
     ),
   ),
@@ -24,12 +24,39 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_63703930470363_29059324 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6382147887e852_84407073 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
 
     function incluirColaborador(){
         window.location = "index.php?do=colaborador&action=editar&acao=I";
+    }
+
+    function editarColaborador(codigoColaborador){
+        window.location = "index.php?do=colaborador&action=editar&acao=A&codigoColaborador=" + codigoColaborador;
+    }
+
+    function excluirColaborador(codigoColaborador){
+
+        var resposta = confirm("Deseja realmente excluir este colaborador !");
+
+        if(resposta == true){
+
+            var urlAction = "index.php?do=colaborador&action=excluir";
+
+            jQuery.ajax({
+                type: 'GET',
+                url: urlAction,
+                data: {
+                    'codigoColaborador':codigoColaborador
+                },
+                success: function (data) {
+                    console.log(data);
+                    window.location = "index.php?do=colaborador&action=inicio";
+                    alert("Colaborador excluido com Sucesso !")
+                }
+            });
+        }
     }
 
 

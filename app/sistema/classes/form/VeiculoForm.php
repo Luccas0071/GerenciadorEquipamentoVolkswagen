@@ -74,6 +74,13 @@ class  VeiculoForm {
         return $objVeiculo;
     }
 
+    public function transfereModelForm($objColaborador)
+    {
+        $this->setCodigo($objColaborador->getCodigo());
+        $this->setNome($objColaborador->getNome());
+        $this->setDataInclusao($objColaborador->getDataInclusao());
+    }
+
 
 
  

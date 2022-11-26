@@ -81,11 +81,20 @@ class  ColaboradorForm {
     public function transfereFormModel(){
 
         $objColaborador = new Colaborador();
+        $objColaborador->setCodigo($this->getCodigo());
         $objColaborador->setNome($this->getNome());
         $objColaborador->setFuncao($this->getFuncao());
         $objColaborador->setDataAdmissao($this->getDataAdmissao());
 
         return $objColaborador;
+    }
+
+    public function transfereModelForm($objColaborador)
+    {
+        $this->setCodigo($objColaborador->getCodigo());
+        $this->setNome($objColaborador->getNome());
+        $this->setFuncao($objColaborador->getFuncao());
+        $this->setDataAdmissao($objColaborador->getDataAdmissao());
     }
 
 

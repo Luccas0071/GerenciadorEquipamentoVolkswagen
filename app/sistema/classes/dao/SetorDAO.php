@@ -67,6 +67,62 @@ class SetorDAO extends DAOFactory{
         return $collectionSetor;
     }
 
+	public function obterSetor($codigoSetor){
+
+		$sql  = " SELECT ";
+		$sql .= " 	set_codigo, ";
+		$sql .= " 	set_nome,	";
+		$sql .= " 	set_data_inclusao, ";
+		$sql .= " 	vei_codigo ";
+		$sql .= " FROM gerenciador.tb_setor ";
+		$sql .= " WHERE set_codigo = :codigoSetor ";
+		
+        $query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoSetor', $codigoSetor, PDO::PARAM_STR);
+
+		if ($query->execute()) {
+            $rs = $query->fetch(PDO::FETCH_ASSOC);
+
+			$objSetor = new Setor();
+
+			$objSetor->setCodigo($rs['set_codigo']);
+			$objSetor->setNome($rs['set_nome']);
+			$objSetor->setDataInclusao($rs['set_data_inclusao']);
+			
+			$objSetor->setObjVeiculo(new Veiculo);
+			$objSetor->getObjVeiculo()->setCodigo($rs['vei_codigo']);
+
+        } else {
+            $collectionErro = $query->errorInfo();
+            throw new Exception("SetorDAO->obterSetor " . $collectionErro[2]);
+        }
+        return $objSetor;
+    }
+
+	public function alterarSetor($objSetor){
+
+		$sql = " UPDATE gerenciador.tb_setor SET  ";
+		$sql .= " set_nome = 			:nome, ";
+		$sql .= " set_data_inclusao = 	:dataInclusao, ";
+		$sql .= " vei_codigo = 			:codigoVeiculo ";
+		$sql .= " WHERE set_codigo =  	:codigoSetor ";
+
+		$query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoSetor', 		$objSetor->getCodigo(), 					PDO::PARAM_INT);
+		$query->bindParam(':nome', 				$objSetor->getNome(), 						PDO::PARAM_STR);
+        $query->bindParam(':dataInclusao', 		$objSetor->getDataInclusao(), 				PDO::PARAM_STR);
+        $query->bindParam(':codigoVeiculo', 	$objSetor->getObjVeiculo()->getCodigo(), 	PDO::PARAM_STR);
+   
+
+		if (!$query->execute()) {
+			$collectionErro = $query->errorInfo();
+			throw new Exception("SetorDAO->alterarSetor " . $collectionErro[2]);
+		}
+		return true;
+    }
+
     // public function listContents($idModule){
     //     $collectionContents = array();
 

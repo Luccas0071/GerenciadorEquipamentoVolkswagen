@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-13 01:22:50
+/* Smarty version 4.0.0, created on 2022-11-26 14:29:09
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\colaborador\listarColaborador.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_637038da09ac12_44464817',
+  'unifunc' => 'content_638214a5d52660_52429284',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'aeb3c3b92908f97bc1b8df1f884f9fa2fe4a08b9' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\colaborador\\listarColaborador.html',
-      1 => 1668298967,
+      1 => 1669469346,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_637038da09ac12_44464817 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638214a5d52660_52429284 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="p-5 mb-4 bg-light rounded-3">
     <table class="table">
         <thead class="thead-dark">
@@ -50,10 +50,12 @@ $_smarty_tpl->tpl_vars['objColaborador']->do_else = false;
                     <td><?php echo $_smarty_tpl->tpl_vars['objColaborador']->value->getFuncao();?>
 </td>
                     <td>
-                        <button type="button" class="btn btn-warning">
+                        <button type="button" class="btn btn-warning" onclick="editarColaborador('<?php echo $_smarty_tpl->tpl_vars['objColaborador']->value->getCodigo();?>
+')">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger" onclick="excluirColaborador('<?php echo $_smarty_tpl->tpl_vars['objColaborador']->value->getCodigo();?>
+')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>

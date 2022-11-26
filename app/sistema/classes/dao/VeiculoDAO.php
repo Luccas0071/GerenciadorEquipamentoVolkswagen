@@ -76,6 +76,56 @@ class VeiculoDAO extends DAOFactory{
 		return true;
 	}
 	
+	public function obterVeiculo($codigoVeiculo){
+
+		$sql  = " SELECT ";
+		$sql .= " vei_codigo, ";
+		$sql .= " vei_nome,	";
+		$sql .= " vei_data_inclusao ";
+		$sql .= " FROM gerenciador.tb_veiculo ";
+		$sql .= " WHERE vei_codigo = :codigoVeiculo ";
+		
+        $query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoVeiculo', $codigoVeiculo, PDO::PARAM_STR);
+
+		if ($query->execute()) {
+            $rs = $query->fetch(PDO::FETCH_ASSOC);
+
+			$objVeiculo = new Veiculo();
+
+			$objVeiculo->setCodigo($rs['vei_codigo']);
+			$objVeiculo->setNome($rs['vei_nome']);
+			$objVeiculo->setDataInclusao($rs['vei_data_inclusao']);
+        } else {
+            $collectionErro = $query->errorInfo();
+            throw new Exception("VeiculoDAO->obterVeiculo " . $collectionErro[2]);
+        }
+        return $objVeiculo;
+    }
+
+	public function alterarVeiculo($objVeiculo){
+
+		$sql = " UPDATE gerenciador.tb_veiculo SET  ";
+		$sql .= " vei_nome = 			:nome, ";
+		$sql .= " vei_data_inclusao = 	:dataInclusao ";
+		$sql .= " WHERE vei_codigo =  	:codigoVeiculo ";
+
+		$query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoVeiculo', 	$objVeiculo->getCodigo(), 		PDO::PARAM_INT);
+		$query->bindParam(':nome', 				$objVeiculo->getNome(), 		PDO::PARAM_STR);
+        $query->bindParam(':dataInclusao', 		$objVeiculo->getDataInclusao(), PDO::PARAM_STR);
+   
+
+		if (!$query->execute()) {
+			$collectionErro = $query->errorInfo();
+			throw new Exception("VeiculoDAO->alterarVeiculo " . $collectionErro[2]);
+		}
+		return true;
+    }
+
+
 
     // public function listContents($idModule){
     //     $collectionContents = array();

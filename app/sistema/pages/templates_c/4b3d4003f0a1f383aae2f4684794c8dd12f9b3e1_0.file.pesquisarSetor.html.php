@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-22 01:52:18
+/* Smarty version 4.0.0, created on 2022-11-26 15:46:36
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\setor\pesquisarSetor.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_637c1d427dcda4_15390760',
+  'unifunc' => 'content_638226ccbffbb1_89834999',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4b3d4003f0a1f383aae2f4684794c8dd12f9b3e1' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\setor\\pesquisarSetor.html',
-      1 => 1669078157,
+      1 => 1669473986,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_637c1d427dcda4_15390760 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638226ccbffbb1_89834999 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
 
@@ -32,6 +32,32 @@ echo '<script'; ?>
         window.location = "index.php?do=setor&action=editar&acao=I";
     }
 
+    function editarSetor(codigoSetor){
+        window.location = "index.php?do=setor&action=editar&acao=A&codigoSetor=" + codigoSetor;
+    }
+
+    function excluirSetor(codigoSetor){
+
+        var resposta = confirm("Deseja realmente excluir este Setor !");
+
+        if(resposta == true){
+
+            var urlAction = "index.php?do=setor&action=excluir";
+
+            jQuery.ajax({
+                type: 'GET',
+                url: urlAction,
+                data: {
+                    'codigoSetor':codigoSetor
+                },
+                success: function (data) {
+                    console.log(data);
+                    window.location = "index.php?do=setor&action=inicio";
+                    alert("Setor excluido com Sucesso !")
+                }
+            });
+        }
+    }
 
 <?php echo '</script'; ?>
 >

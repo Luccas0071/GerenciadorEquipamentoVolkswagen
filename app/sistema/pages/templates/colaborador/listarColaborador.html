@@ -18,10 +18,10 @@
                     <td>{$objColaborador->getDataAdmissao()}</td>
                     <td>{$objColaborador->getFuncao()}</td>
                     <td>
-                        <button type="button" class="btn btn-warning">
+                        <button type="button" class="btn btn-warning" onclick="editarColaborador('{$objColaborador->getCodigo()}')">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger" onclick="excluirColaborador('{$objColaborador->getCodigo()}')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>

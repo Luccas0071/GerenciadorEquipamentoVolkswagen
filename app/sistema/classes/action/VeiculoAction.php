@@ -29,9 +29,11 @@ class VeiculoAction
         $acao = $get['acao'];
 
         try {
-            // $collectionColaborador = $objColaboradorFacade->listarColaborador();
-            // $smarty->assign("collectionColaborador", $collectionColaborador);
-
+            if($acao != "I"){
+                $codigoVeiculo = $get['codigoVeiculo'];
+                $objVeiculo = $objVeiculoFacade->obterVeiculo($codigoVeiculo);
+                $objVeiculoForm->transfereModelForm($objVeiculo);
+            }
         } catch (Exception $e) {
             $mensagem = $e;
             throw new Exception("VeiculoAction->editar " . $e);
@@ -43,7 +45,7 @@ class VeiculoAction
 
         $smarty->assign("objVeiculoForm", $objVeiculoForm);
 
-        if($acao == "I"){
+        if($acao == "I" || $acao == "A"){
             $smarty->display('templates/veiculo/editarVeiculo.html');
         }
         return true;
@@ -66,6 +68,25 @@ class VeiculoAction
             throw new Exception("VeiculoAction->inicio " . $e);
         }
 
+        return true;
+    }
+
+    public function alterar($request){
+
+        $smarty             = new Smarty();
+        $objVeiculoForm     = new VeiculoForm();
+        $objVeiculoFacade   = new VeiculoFacade();
+
+        try {
+            $objVeiculoForm->transfereRequestForm($request);
+            $objVeiculo = $objVeiculoForm->transfereFormModel();
+
+            $objVeiculoFacade->alterarVeiculo($objVeiculo);
+           
+        } catch (Exception $e) {
+            $mensagem = $e;
+            throw new Exception("VeiculoAction->alterar " . $e);
+        }
         return true;
     }
 

@@ -5,14 +5,14 @@ include_once 'configs/Config.php';
 include_once '../classes/action/LoginAction.php';
 include_once '../classes/action/UserAction.php';
 include_once '../classes/action/InicioAction.php';
-include_once '../classes/action/ArquivoAction.php'; //ok
+include_once '../classes/action/PlanilhaCalibracaoAction.php'; //ok
 include_once '../classes/action/ColaboradorAction.php'; //ok
 include_once '../classes/action/EquipamentoAction.php'; //ok
 include_once '../classes/action/RelatorioAction.php'; //ok
 include_once '../classes/action/VeiculoAction.php'; //ok
 include_once '../classes/action/SetorAction.php'; //ok
 include_once '../classes/action/MainAction.php';
-
+require '../../../vendor/autoload.php';
 
 if(!isset($_GET['do']) && !isset($_GET['action'])){
     header('Location: index.php?do=login&action=start');
@@ -46,23 +46,27 @@ if($_SESSION['USUARIO']['NOME'] != ""){
     if($do == "index"){
 
         $inicioAction = new InicioAction();
-        $arquivoAction = new ArquivoAction();
+        $PlanilhaColibracaoAction = new PlanilhaCalibracaoAction();
 
         if($action == "inicio"){
             $inicioAction->inicio($_GET);
         }
 
-        if($action == "mostrarArquivo"){
-            $arquivoAction->mostrarArquivo($_POST);
-        }
+        // if($action == "mostrarArquivo"){
+        //     $PlanilhaColibracaoAction->mostrarArquivo($_POST);
+        // }
     } 
 
     /*planilha*/
-    if($do == "planilha"){
-        $arquivoAction = new ArquivoAction();
+    if($do == "planilhaCalibracao"){
+        $PlanilhaCalibracaoAction = new PlanilhaCalibracaoAction();
 
         if($action == "inicio"){
-            $arquivoAction->inicio();
+            $PlanilhaCalibracaoAction->inicio();
+        }
+
+        if($action == "editar"){
+            $PlanilhaCalibracaoAction->editar($_GET);
         }
     } 
 
@@ -80,6 +84,14 @@ if($_SESSION['USUARIO']['NOME'] != ""){
 
         if($action == "incluir"){
             $ColaboradorAction->incluir($_POST);
+        }
+
+        if($action == "alterar"){
+            $ColaboradorAction->alterar($_POST);
+        }
+
+        if($action == "excluir"){
+            $ColaboradorAction->excluir($_GET);
         }
     } 
 
@@ -124,9 +136,9 @@ if($_SESSION['USUARIO']['NOME'] != ""){
             $VeiculoAction->incluir($_POST);
         }
 
-        // if($action == "alterar"){
-        //     $VeiculoAction->alterar($_POST);
-        // }
+        if($action == "alterar"){
+            $VeiculoAction->alterar($_POST);
+        }
 
         if($action == "excluir"){
             $VeiculoAction->excluir($_GET);
@@ -149,13 +161,13 @@ if($_SESSION['USUARIO']['NOME'] != ""){
             $SetorAction->incluir($_POST);
         }
 
-        // if($action == "alterar"){
-        //     $SetorAction->alterar($_POST);
-        // }
+        if($action == "alterar"){
+            $SetorAction->alterar($_POST);
+        }
 
-        // if($action == "excluir"){
-        //     $SetorAction->excluir($_GET);
-        // }
+        if($action == "excluir"){
+            $SetorAction->excluir($_GET);
+        }
     } 
 
     /*Relatorio*/

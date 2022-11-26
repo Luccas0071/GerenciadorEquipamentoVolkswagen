@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-22 02:12:03
+/* Smarty version 4.0.0, created on 2022-11-26 16:05:51
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\setor\editarSetor.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_637c21e3ca5b81_16402940',
+  'unifunc' => 'content_63822b4f2a2315_81480735',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'cd585320781424226f35f87f923fe86edcaa21be' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\setor\\editarSetor.html',
-      1 => 1669079484,
+      1 => 1669475145,
       2 => 'file',
     ),
   ),
@@ -23,7 +23,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_637c21e3ca5b81_16402940 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63822b4f2a2315_81480735 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
 
@@ -44,8 +44,12 @@ echo '<script'; ?>
 			data: formDados,
 			success: function (data) {
 				console.log(data);
-                // redirecionar()
-                // alert("Colaborador Incluido com Sucesso !")
+                redirecionar()
+                if(acao == "I"){
+                    alert("Setor Incluido com Sucesso !")
+                }else{
+                    alert("Setor Alterado com Sucesso !")
+                }
 			},
 			cache: false,
 			contentType: false,

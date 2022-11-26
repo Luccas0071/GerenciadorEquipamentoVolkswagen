@@ -4,6 +4,32 @@
         window.location = "index.php?do=setor&action=editar&acao=I";
     }
 
+    function editarSetor(codigoSetor){
+        window.location = "index.php?do=setor&action=editar&acao=A&codigoSetor=" + codigoSetor;
+    }
+
+    function excluirSetor(codigoSetor){
+
+        var resposta = confirm("Deseja realmente excluir este Setor !");
+
+        if(resposta == true){
+
+            var urlAction = "index.php?do=setor&action=excluir";
+
+            jQuery.ajax({
+                type: 'GET',
+                url: urlAction,
+                data: {
+                    'codigoSetor':codigoSetor
+                },
+                success: function (data) {
+                    console.log(data);
+                    window.location = "index.php?do=setor&action=inicio";
+                    alert("Setor excluido com Sucesso !")
+                }
+            });
+        }
+    }
 
 </script>
 

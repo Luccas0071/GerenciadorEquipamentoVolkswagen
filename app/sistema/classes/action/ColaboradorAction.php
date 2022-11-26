@@ -26,13 +26,19 @@ class ColaboradorAction
     
     public function editar($get){
 
-        $smarty             = new Smarty();
+        $smarty                 = new Smarty();
         $objColaboradorForm     = new ColaboradorForm();
         $objColaboradorFacade   = new ColaboradorFacade();
 
         $acao = $get['acao'];
 
         try {
+            if($acao != "I"){
+                $codigoColaborador = $get['codigoColaborador'];
+                $objColaborador = $objColaboradorFacade->obterColaborador($codigoColaborador);
+                $objColaboradorForm->transfereModelForm($objColaborador);
+            }
+
             // $collectionColaborador = $objColaboradorFacade->listarColaborador();
             // $smarty->assign("collectionColaborador", $collectionColaborador);
 
@@ -41,13 +47,11 @@ class ColaboradorAction
             throw new Exception("ColaboradorAction->inicio " . $e);
         }
 
-  
-
         $objColaboradorForm->setAcao($acao);
 
         $smarty->assign("objColaboradorForm", $objColaboradorForm);
 
-        if($acao == "I"){
+        if($acao == "I" || $acao == "A"){
             $smarty->display('templates/colaborador/editarColaborador.html');
         }
         return true;
@@ -68,6 +72,44 @@ class ColaboradorAction
         } catch (Exception $e) {
             $mensagem = $e;
             throw new Exception("ColaboradorAction->inicio " . $e);
+        }
+
+        return true;
+    }
+
+    public function alterar($request){
+
+        $smarty                 = new Smarty();
+        $objColaboradorForm     = new ColaboradorForm();
+        $objColaboradorFacade   = new ColaboradorFacade();
+
+        try {
+            $objColaboradorForm->transfereRequestForm($request);
+            $objColaborador = $objColaboradorForm->transfereFormModel();
+
+            $objColaboradorFacade->alterarColaborador($objColaborador);
+           
+        } catch (Exception $e) {
+            $mensagem = $e;
+            throw new Exception("ColaboradorAction->alterar " . $e);
+        }
+
+        return true;
+    }
+
+    public function excluir($get){
+
+        $smarty             = new Smarty();
+        $objColaboradorFacade   = new ColaboradorFacade();
+     
+        $codigoColaborador = $get['codigoColaborador'];
+
+        try {
+            $objColaboradorFacade->excluirColaborador($codigoColaborador);
+           
+        } catch (Exception $e) {
+            $mensagem = $e;
+            throw new Exception("ColaboradorAction->excluir " . $e);
         }
 
         return true;

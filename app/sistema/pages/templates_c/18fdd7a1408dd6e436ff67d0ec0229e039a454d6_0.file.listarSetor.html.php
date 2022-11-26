@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-22 02:28:54
+/* Smarty version 4.0.0, created on 2022-11-26 16:04:10
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\setor\listarSetor.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_637c25d6981f39_24425806',
+  'unifunc' => 'content_63822aea771cd0_51302689',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '18fdd7a1408dd6e436ff67d0ec0229e039a454d6' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\setor\\listarSetor.html',
-      1 => 1669080529,
+      1 => 1669475045,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_637c25d6981f39_24425806 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63822aea771cd0_51302689 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="p-5 mb-4 bg-light rounded-3">
     <table class="table">
         <thead class="thead-dark">
@@ -51,7 +51,6 @@ $_smarty_tpl->tpl_vars['objSetor']->do_else = false;
 </td>
                     <td><?php echo $_smarty_tpl->tpl_vars['objSetor']->value->getDataInclusao();?>
 </td>
-                    <td>--</td>
                     <td>
                         <button type="button" class="btn btn-warning" onclick="editarSetor('<?php echo $_smarty_tpl->tpl_vars['objSetor']->value->getCodigo();?>
 ')">

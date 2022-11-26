@@ -31,16 +31,20 @@ class RelatorioFacade{
         
         $objEquipamentoDAO  = new  EquipamentoDAO();
         $objColaboradorDAO  = new  ColaboradorDAO();
+        $mpdf = new \Mpdf\Mpdf();
 
         try {
             DAOFactory::$connection->pdo->beginTransaction();
 
             $collectionEquipamento = $objEquipamentoDAO->listarEquipamento();
 
-            
-            
-            
-            
+            $mpdf->WriteHTML('<h1>Hello world!</h1>');
+
+            foreach($collectionEquipamento as $objEquipamento){
+                $mpdf->WriteHTML('<p>'. $objEquipamento->getModelo() .'</p>');
+            }
+
+            $mpdf->Output('','D');
             
             
             
