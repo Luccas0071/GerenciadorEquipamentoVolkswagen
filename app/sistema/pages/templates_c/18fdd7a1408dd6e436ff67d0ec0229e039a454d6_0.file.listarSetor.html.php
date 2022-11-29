@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-26 16:04:10
+/* Smarty version 4.0.0, created on 2022-11-26 23:30:08
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\setor\listarSetor.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_63822aea771cd0_51302689',
+  'unifunc' => 'content_638293704f9f03_62548376',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '18fdd7a1408dd6e436ff67d0ec0229e039a454d6' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\setor\\listarSetor.html',
-      1 => 1669475045,
+      1 => 1669475501,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_63822aea771cd0_51302689 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638293704f9f03_62548376 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="p-5 mb-4 bg-light rounded-3">
     <table class="table">
         <thead class="thead-dark">

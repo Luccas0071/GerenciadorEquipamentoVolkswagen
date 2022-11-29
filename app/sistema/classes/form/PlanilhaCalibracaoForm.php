@@ -1,6 +1,6 @@
 <?php
 include_once '../classes/model/PlanilhaCalibracao.php';
-include_once '../classes/model/ItemArquivo.php';
+include_once '../classes/model/ItemPlanilhaCalibracao.php';
 require '../../../vendor/autoload.php';
 
 class  PlanilhaCalibracaoForm {
@@ -93,27 +93,28 @@ class  PlanilhaCalibracaoForm {
             array_push($arrayLinhas, $arrayLinha);
         }
 
-        $collectionItemArquivo = [];
+        $collectionItemPlanilhaCalibracao = [];
         foreach ($arrayLinhas as $linha){
-            $objItemArquivo = new ItemArquivo();
+            $objItemPlanilhaCalibracao = new ItemPlanilhaCalibracao();
 
-            $objItemArquivo->setLocation($linha[0]);
-            $objItemArquivo->setDescription($linha[1]);
-            $objItemArquivo->setFolder($linha[2]);
-            $objItemArquivo->setTestType($linha[3]);
-            $objItemArquivo->setMeasure($linha[4]);
-            $objItemArquivo->setNextCheck($linha[5]);
-            $objItemArquivo->setObservacao($linha[6]);
+            $objItemPlanilhaCalibracao->setLocation($linha[0]);
+            $objItemPlanilhaCalibracao->setDescription($linha[1]);
+            $objItemPlanilhaCalibracao->setFolder($linha[2]);
+            $objItemPlanilhaCalibracao->setTestType($linha[3]);
+            $objItemPlanilhaCalibracao->setMeasure($linha[4]);
+            $objItemPlanilhaCalibracao->setNextCheck($linha[5]);
+            $objItemPlanilhaCalibracao->setObservacao($linha[6]);
 
-            array_push($collectionItemArquivo, $objItemArquivo);
+            array_push($collectionItemPlanilhaCalibracao, $objItemPlanilhaCalibracao);
         }
-        $this->setCollectionDadosArquivo($collectionItemArquivo);
+        $this->setCollectionDadosArquivo($collectionItemPlanilhaCalibracao);
     }
 
     public function transfereFormModel(){
 
         $objPlanilhaCalibracao = new PlanilhaCalibracao();
 
+        $objPlanilhaCalibracao->setCodigo($this->getCodigo());
         $objPlanilhaCalibracao->setNome($this->getNome());
         $objPlanilhaCalibracao->setCollectionItemPlanilhaCalibracao($this->getCollectionDadosArquivo());
       
@@ -127,7 +128,13 @@ class  PlanilhaCalibracaoForm {
         $this->setDataInclusao($objPlanilhaCalibracao->getDataInclusao());
     }
 
+    public function transfereRequestForm($request){
 
+        $this->setCodigo($request['codigoPlanilhaCalibracao']);
+        $this->setNome($request['nome']);
+        $this->setDataInclusao($request['dataInclusao']);
+
+    }
 
 
 }

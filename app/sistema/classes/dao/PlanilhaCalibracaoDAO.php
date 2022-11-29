@@ -35,7 +35,7 @@ class PlanilhaCalibracaoDAO extends DAOFactory{
         }
     }
 
-    public function incluirItemArquivo($objArquivo, $codigoPlanilha){
+    public function incluirItemPlanilhaCalibracao($objPlanilhaCalibracao, $codigoPlanilha){
 
 		$sql = " INSERT INTO gerenciador.tb_item_planilha_fornecedor  ";
 		$sql .= " (  ";
@@ -62,18 +62,18 @@ class PlanilhaCalibracaoDAO extends DAOFactory{
 
         $query = parent::$connection->pdo->prepare($sql);
 
-        $query->bindParam(':codigoPlanilha', 	$codigoPlanilha, 					PDO::PARAM_INT);
-        $query->bindParam(':location', 			$objArquivo->getLocation(), 		PDO::PARAM_STR);
-		$query->bindParam(':description', 		$objArquivo->getDescription(), 		PDO::PARAM_STR);
-		$query->bindParam(':folder', 			$objArquivo->getFolder(), 	    	PDO::PARAM_STR);
-		$query->bindParam(':testType', 			$objArquivo->getTestType(), 	    PDO::PARAM_STR);
-		$query->bindParam(':measure', 			$objArquivo->getMeasure(),			PDO::PARAM_STR);
-		$query->bindParam(':nextCheck', 		$objArquivo->getNextCheck(), 		PDO::PARAM_STR);
-		$query->bindParam(':observacao', 		$objArquivo->getObservacao(), 		PDO::PARAM_STR);
+        $query->bindParam(':codigoPlanilha', 	$codigoPlanilha, 							PDO::PARAM_INT);
+        $query->bindParam(':location', 			$objPlanilhaCalibracao->getLocation(), 		PDO::PARAM_STR);
+		$query->bindParam(':description', 		$objPlanilhaCalibracao->getDescription(), 	PDO::PARAM_STR);
+		$query->bindParam(':folder', 			$objPlanilhaCalibracao->getFolder(), 	    PDO::PARAM_STR);
+		$query->bindParam(':testType', 			$objPlanilhaCalibracao->getTestType(), 	    PDO::PARAM_STR);
+		$query->bindParam(':measure', 			$objPlanilhaCalibracao->getMeasure(),		PDO::PARAM_STR);
+		$query->bindParam(':nextCheck', 		$objPlanilhaCalibracao->getNextCheck(), 	PDO::PARAM_STR);
+		$query->bindParam(':observacao', 		$objPlanilhaCalibracao->getObservacao(), 	PDO::PARAM_STR);
 
 		if (!$query->execute()) {
 			$collectionErro = $query->errorInfo();
-			throw new Exception("ArquivoDAO->incluirItemArquivo " . $collectionErro[2]);
+			throw new Exception("PlanilhaCalibracaoDAO->incluirItemPlanilhaCalibracao " . $collectionErro[2]);
 		}
         return true;
     }
@@ -134,6 +134,88 @@ class PlanilhaCalibracaoDAO extends DAOFactory{
         }
         return $objPlanilhaCalibracao;
     }
+
+	public function listarItemPlanilhaCalibracao($codigoPlanilhaCalibracao){
+
+		$sql  = " SELECT  ";
+		$sql .= " 	ipf_codigo, ";
+    	$sql .= " 	ipf_location, ";
+    	$sql .= " 	ipf_description, ";
+    	$sql .= " 	ipf_folder, ";
+    	$sql .= " 	ipf_test, ";
+    	$sql .= " 	ipf_measure, ";
+    	$sql .= " 	ipf_next_check, ";
+    	$sql .= " 	ipf_observacao, ";
+    	$sql .= " 	plf_codigo ";
+		$sql .= " FROM gerenciador.tb_item_planilha_fornecedor  ";
+		$sql .= " WHERE plf_codigo = :codigoPlanilhaCalibracao  ";
+
+        $query = parent::$connection->pdo->prepare($sql);
+
+        $query->bindParam(":codigoPlanilhaCalibracao", $codigoPlanilhaCalibracao, PDO::PARAM_INT);
+
+        $collectionItemPlanilhaCalibracao = array();
+        if ($query->execute()) {
+            while ($rs = $query->fetch(PDO::FETCH_ASSOC)) {
+                $objItemPlanilhaCalibracao = new ItemPlanilhaCalibracao();
+
+                $objItemPlanilhaCalibracao->setCodigo($rs['ipf_codigo']);
+                $objItemPlanilhaCalibracao->setLocation($rs['ipf_location']);
+                $objItemPlanilhaCalibracao->setDescription($rs['ipf_description']);
+                $objItemPlanilhaCalibracao->setFolder($rs['ipf_folder']);
+                $objItemPlanilhaCalibracao->setTestType($rs['ipf_test']);
+                $objItemPlanilhaCalibracao->setMeasure($rs['ipf_measure']);
+                $objItemPlanilhaCalibracao->setNextCheck($rs['ipf_next_check']);
+                $objItemPlanilhaCalibracao->setObservacao($rs['ipf_observacao']);
+
+                $objItemPlanilhaCalibracao->setObjPlanilhaCalibracao(new PlanilhaCalibracao());
+                $objItemPlanilhaCalibracao->getObjPlanilhaCalibracao()->setCodigo($rs['plf_codigo']);
+
+                array_push($collectionItemPlanilhaCalibracao, $objItemPlanilhaCalibracao);
+            }
+        } else {
+            $collectionErro = $query->errorInfo();
+            throw new Exception("PlanilhaCalibracaoDAO->listarItemPlanilhaCalibracao" . $collectionErro[2]);
+        }
+        return $collectionItemPlanilhaCalibracao;
+    }
+
+	public function excluirPlanilhaCalibracao($codigoPlanilhaCalibracao){
+
+		$sql  = "DELETE FROM ";
+		$sql .= "	gerenciador.tb_planilha_fornecedor ";
+		$sql .= " WHERE ";
+		$sql .= "   plf_codigo = :codigoPlanilhaCalibracao ";
+
+		$query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoPlanilhaCalibracao', $codigoPlanilhaCalibracao, PDO::PARAM_INT);
+
+		if (!$query->execute()) {
+			$collectionErro = $query->errorInfo();
+			throw new Exception("PlanilhaCalibracaoDAO->excluirPlanilhaCalibracao " . $collectionErro[2]);
+		}
+		return true;
+	}
+
+	public function alterarPlanilhaCalibracao($objPlanilhaCalibracao){
+
+		$sql = " UPDATE gerenciador.tb_planilha_fornecedor SET  ";
+		$sql .= " plf_nome = 			:nome ";
+		$sql .= " WHERE plf_codigo =  	:codigoPlanilhaCalibracao ";
+
+		$query = parent::$connection->pdo->prepare($sql);
+
+		$query->bindParam(':codigoPlanilhaCalibracao', 	$objPlanilhaCalibracao->getCodigo(), 	PDO::PARAM_INT);
+		$query->bindParam(':nome', 						$objPlanilhaCalibracao->getNome(), 		PDO::PARAM_STR);
+
+		if (!$query->execute()) {
+			$collectionErro = $query->errorInfo();
+			throw new Exception("PlanilhaCalibracaoDAO->alterarPlanilhaCalibracao " . $collectionErro[2]);
+		}
+		return true;
+    }
+
 
     // public function listContents($idModule){
     //     $collectionContents = array();

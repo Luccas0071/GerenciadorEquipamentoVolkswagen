@@ -52,9 +52,9 @@ if($_SESSION['USUARIO']['NOME'] != ""){
             $inicioAction->inicio($_GET);
         }
 
-        // if($action == "mostrarArquivo"){
-        //     $PlanilhaColibracaoAction->mostrarArquivo($_POST);
-        // }
+        if($action == "incluirPlanilha"){
+            $PlanilhaColibracaoAction->incluirPlanilha($_POST);
+        }
     } 
 
     /*planilha*/
@@ -67,6 +67,18 @@ if($_SESSION['USUARIO']['NOME'] != ""){
 
         if($action == "editar"){
             $PlanilhaCalibracaoAction->editar($_GET);
+        }
+
+        if($action == "listarItemPlanilhaCalibracao"){
+            $PlanilhaCalibracaoAction->listarItemPlanilhaCalibracao($_GET);
+        }
+
+        if($action == "alterar"){
+            $PlanilhaCalibracaoAction->alterar($_POST);
+        }
+
+        if($action == "excluir"){
+            $PlanilhaCalibracaoAction->excluir($_GET);
         }
     } 
 
@@ -177,8 +189,17 @@ if($_SESSION['USUARIO']['NOME'] != ""){
         if($action == "inicio"){
             $RelatorioAction->inicio();
         }
+
+        if($action == "editar"){
+            $RelatorioAction->editar($_GET);
+        }
+
         if($action == "gerarRelatorio"){
-            $RelatorioAction->gerarRelatorio();
+            $RelatorioAction->gerarRelatorio($_GET);
+        }
+
+        if($action == "pesquisarEquipamento"){
+            $RelatorioAction->pesquisarEquipamento($_GET);
         }
     } 
 

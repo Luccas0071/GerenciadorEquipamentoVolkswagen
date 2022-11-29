@@ -25,37 +25,55 @@ class RelatorioFacade{
         return true;
     }
 
-    public function gerarRelatorio(){
+    public function pesquisarEquipamento($veiculo, $setor, $dataInicio, $dataFinal){
+
+        DAOFactory::getDAOFactory();
+        
+        $objRelatorioDAO  = new  RelatorioDAO();
+        $objPagina  = new Pagina();
+
+        try {
+            DAOFactory::$connection->pdo->beginTransaction();
+
+            $objPagina->setQtdTotalRegistro($objRelatorioDAO->pesquisarQtdEquipamento($veiculo, $setor, $dataInicio, $dataFinal));
+            $objPagina->setRegistros($objRelatorioDAO->pesquisarEquipamento($veiculo, $setor, $dataInicio, $dataFinal));
+
+            DAOFactory::$connection->pdo->commit();
+			DAOFactory::$connection->closePDO();
+        } catch (Exception $e) {
+            DAOFactory::$connection->pdo->rollBack();
+			DAOFactory::$connection->closePDO();
+            throw new Exception($e);
+        }
+        return $objPagina;
+    }
+
+    public function gerarRelatorio($objPagina){
 
         DAOFactory::getDAOFactory();
         
         $objEquipamentoDAO  = new  EquipamentoDAO();
         $objColaboradorDAO  = new  ColaboradorDAO();
-        $mpdf = new \Mpdf\Mpdf();
+        $mpdf               = new \Mpdf\Mpdf();
+        $smarty             = new Smarty();
 
         try {
             DAOFactory::$connection->pdo->beginTransaction();
 
-            $collectionEquipamento = $objEquipamentoDAO->listarEquipamento();
+        
+            // $collectionEquipamento = $objEquipamentoDAO->listarEquipamento();
+            $smarty->assign('objPagina', $objPagina);
+            $output = $smarty->fetch('templateRelatorios/pdfRelatorioEquipamento.html');
 
-            $mpdf->WriteHTML('<h1>Hello world!</h1>');
+            
 
-            foreach($collectionEquipamento as $objEquipamento){
-                $mpdf->WriteHTML('<p>'. $objEquipamento->getModelo() .'</p>');
-            }
+            $mpdf->WriteHTML($output);
 
-            $mpdf->Output('','D');
-            
-            
-            
-            
-            
-            
-            
-            
-            print_r($collectionEquipamento);
-            exit;
+           //D = Download
 
+            $mpdf->Output('teste.pdf','D');
+            
+            
             DAOFactory::$connection->pdo->commit();
 			DAOFactory::$connection->closePDO();
         } catch (Exception $e) {

@@ -3,29 +3,26 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Codigo</td>
-                <th scope="col">Modelo</td>
-                <th scope="col">N° Série</td>
-                <th scope="col">Data Vencimento</td>
-                <th scope="col">Status</td>
-                <th scope="col">Data Calibração</td>
+                <th scope="col">Identificação</td>
+                <th scope="col">Data</td>
                 <th scope="col">Ação</td>
             </tr>
         </thead>
         <tdoby> 
             {foreach item=objEquipamento from=$collectionEquipamento}
-                 
+            
                 {assign var="objStatus" value=$objEquipamento->getObjStatus()}
 
                 <tr>
                     <td>{$objEquipamento->getCodigo()}</td>
-                    <td>{$objEquipamento->getModelo()}</td>
-                    <td>{$objEquipamento->getNumeroSerie()}</td>
+                    <td>teste 01</td>
                     <td>{$objEquipamento->getDataVencimento()}</td>
-                    <td>{$objStatus->getdescricao()}</td>
-                    <td>{$objEquipamento->getDataCalibragem()}</td>
                     <td>
                         <button type="button" class="btn btn-primary">
                             <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                        <button type="button" class="btn btn-info">
+                            <i class="fa fa-file-download"></i>
                         </button>
                     </td>
                 </tr>

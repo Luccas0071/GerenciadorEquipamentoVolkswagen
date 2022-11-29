@@ -1,0 +1,62 @@
+
+
+<table>
+    <tr >
+        <th><img src="img/logoPdf.png" style="width: 15%;"></th>
+        <th style="padding-left: 50px;">
+            <h2>Relatório Equipamentos Volkswagen</h2>
+        </th>
+    </tr>
+</table>
+<hr>
+
+<br>
+
+<div>
+    <table border="2"  style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="padding-left: 20px;">Codigo</td>
+                <th style="padding-left: 20px;">Modelo</td>
+                <th style="padding-left: 20px;">N° Série</td>
+                <th style="padding-left: 20px;">Data Vencimento</td>
+                <th style="padding-left: 20px;">Status</td>
+                <th style="padding-left: 20px;">Data Calibração</td>
+            </tr>
+        </thead>
+        <tdoby> 
+            {foreach item=objEquipamento from=$objPagina->getRegistros()}
+                
+                {assign var="objStatus" value=$objEquipamento->getObjStatus()}
+
+                <tr >
+                    <td style="padding-left: 20px; text-align: center;">{$objEquipamento->getCodigo()}</td>
+                    <td style="padding-left: 20px; text-align: center;">{$objEquipamento->getModelo()}</td>
+                    <td style="padding-left: 20px; text-align: center;">{$objEquipamento->getNumeroSerie()}</td>
+                    <td style="padding-left: 20px; text-align: center;">{$objEquipamento->getDataVencimento()}</td>
+                    <td style="padding-left: 20px; text-align: center;">{$objStatus->getdescricao()}</td>
+                    <td style="padding-left: 20px; text-align: center;">{$objEquipamento->getDataCalibragem()}</td>
+                </tr>
+            {/foreach}
+        </tdoby>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

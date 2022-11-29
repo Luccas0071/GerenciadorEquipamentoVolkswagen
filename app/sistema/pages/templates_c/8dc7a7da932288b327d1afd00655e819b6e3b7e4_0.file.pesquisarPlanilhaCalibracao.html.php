@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-26 17:24:39
+/* Smarty version 4.0.0, created on 2022-11-26 22:18:39
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\planilhaCalibracao\pesquisarPlanilhaCalibracao.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_63823dc7f38e70_78175133',
+  'unifunc' => 'content_638282afa10d09_54942589',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '8dc7a7da932288b327d1afd00655e819b6e3b7e4' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\planilhaCalibracao\\pesquisarPlanilhaCalibracao.html',
-      1 => 1669479877,
+      1 => 1669497514,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_63823dc7f38e70_78175133 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638282afa10d09_54942589 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
 
@@ -32,13 +32,13 @@ echo '<script'; ?>
         window.location = "index.php?do=planilhaCalibracao&action=editar&acao=A&codigoPlanilhaCalibracao=" + codigoPlanilhaCalibracao;
     }
 
-    function excluirColaborador(codigoPlanilhaCalibracao){
+    function excluirPlanilhaCalibracao(codigoPlanilhaCalibracao){
 
-        var resposta = confirm("Deseja realmente excluir este colaborador !");
+        var resposta = confirm("Deseja realmente excluir este planilha de calibragem !");
 
         if(resposta == true){
 
-            var urlAction = "index.php?do=planilha&action=excluir";
+            var urlAction = "index.php?do=planilhaCalibracao&action=excluir";
 
             jQuery.ajax({
                 type: 'GET',
@@ -48,7 +48,7 @@ echo '<script'; ?>
                 },
                 success: function (data) {
                     console.log(data);
-                    window.location = "index.php?do=planilha&action=inicio";
+                    window.location = "index.php?do=planilhaCalibracao&action=inicio";
                     alert("Planilha excluido com Sucesso !")
                 }
             });

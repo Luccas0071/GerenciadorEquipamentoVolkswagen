@@ -6,8 +6,11 @@ class  RelatorioForm {
     private $acao;
     private $codigo;
     private $nome;
-    private $funcao;
-    private $dataAdmissao;
+    private $dataInclusao;
+    private $veiculo;
+    private $setor;
+    private $dataInicio;
+    private $dataFinal;
 
     public function getAcao()
     {
@@ -45,51 +48,95 @@ class  RelatorioForm {
         return $this;
     }
  
-    public function getFuncao()
+    public function getDataInclusao()
     {
-        return $this->funcao;
+        return $this->dataInclusao;
     }
 
-    public function setFuncao($funcao)
+    public function setDataInclusao($dataInclusao)
     {
-        $this->funcao = $funcao;
+        $this->dataInclusao = $dataInclusao;
 
         return $this;
     }
  
-    public function getDataAdmissao()
+    public function getVeiculo()
     {
-        return $this->dataAdmissao;
+        return $this->veiculo;
     }
 
-    public function setDataAdmissao($dataAdmissao)
+    public function setVeiculo($veiculo)
     {
-        $this->dataAdmissao = $dataAdmissao;
+        $this->veiculo = $veiculo;
+
+        return $this;
+    }
+ 
+    public function getSetor()
+    {
+        return $this->setor;
+    }
+
+    public function setSetor($setor)
+    {
+        $this->setor = $setor;
+
+        return $this;
+    }
+ 
+    public function getDataInicio()
+    {
+        return $this->dataInicio;
+    }
+
+    public function setDataInicio($dataInicio)
+    {
+        $this->dataInicio = $dataInicio;
+
+        return $this;
+    }
+
+    public function getDataFinal()
+    {
+        return $this->dataFinal;
+    }
+
+    public function setDataFinal($dataFinal)
+    {
+        $this->dataFinal = $dataFinal;
 
         return $this;
     }
  
     public function transfereRequestForm($request){
 
-        $this->setCodigo($request['codigoColaborador']);
+        $this->setAcao($request['acao']);
+        $this->setCodigo($request['codigoRelatorio']);
         $this->setNome($request['nome']);
-        $this->setFuncao($request['cargo']);
-        $this->setDataAdmissao($request['dataAdmissao']);
+        $this->setDataInclusao($request['dataInclusao']);
+        $this->setVeiculo($request['veiculo']);
+        $this->setSetor($request['setor']);
+        $this->setDataInicio($request['dataInicio']);
+        $this->setDataFinal($request['dataFinal']);
 
     }
 
     public function transfereFormModel(){
 
-        $objColaborador = new Colaborador();
-        $objColaborador->setNome($this->getNome());
-        $objColaborador->setFuncao($this->getFuncao());
-        $objColaborador->setDataAdmissao($this->getDataAdmissao());
+        $objRelatorio = new Relatorio();
 
-        return $objColaborador;
+        $objRelatorio->setCodigo($this->getCodigo());
+        $objRelatorio->setNome($this->getNome());
+        $objRelatorio->setDataInclusao($this->getDataInclusao());
+        $objRelatorio->setDataInicio($this->getDataInicio());
+        $objRelatorio->setDataFinal($this->getDataFinal());
+
+        $objRelatorio->setObjVeiculo(new Veiculo());
+        $objRelatorio->getObjVeiculo()->setCodigo($this->getVeiculo());
+        $objRelatorio->setObjSetor(new Setor());
+        $objRelatorio->getObjSetor()->setCodigo($this->getSetor());
+
+        return $objRelatorio;
     }
-
-
-
- 
-   
+    
 }

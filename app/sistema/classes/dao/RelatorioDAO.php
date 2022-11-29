@@ -65,140 +65,186 @@ class RelatorioDAO extends DAOFactory{
         return $colectionColaborador;
     }
 
-    // public function listContents($idModule){
-    //     $collectionContents = array();
+	public function pesquisarEquipamento($veiculo, $setor, $dataInicio, $dataFinal){
 
-	// 	$sql = " SELECT  ";
-	// 	$sql .= " 	con.con_id, ";
-	// 	$sql .= " 	con.con_title, ";
-	// 	$sql .= " 	con.con_contents, ";
-	// 	$sql .= " 	con.con_create_date, ";
-	// 	$sql .= " 	con.con_update_date, ";
-	// 	$sql .= " 	con.mod_id, ";
-	// 	$sql .= " 	use.use_name ";
-	// 	$sql .= " FROM tb_contents as con ";
-	// 	$sql .= " INNER JOIN tb_module as mod ON mod.mod_id = con.mod_id ";
-	// 	$sql .= " INNER JOIN tb_course as cou ON cou.cou_id = mod.cou_id ";
-	// 	$sql .= " INNER JOIN tb_user as use ON use.use_id = cou.use_id ";
-	// 	$sql .= " WHERE con.mod_id = :idModule  ";
-	// 	$sql .= " ORDER BY con_id  ";
+		$sql  = " SELECT ";
+		$sql .= " 	equ.equ_codigo, ";
+		$sql .= " 	equ.equ_tacto, ";
+		$sql .= " 	equ.equ_tipo_frequencia, ";
+		$sql .= " 	equ.equ_modelo, ";
+		$sql .= " 	equ.equ_numero_serie, ";
+		$sql .= " 	equ.equ_data_vencimento, ";
+		$sql .= " 	equ.equ_torque, ";
+		$sql .= " 	equ.equ_descricao_operacao, ";
+		$sql .= " 	equ.equ_data_calibragem, ";
+		$sql .= " 	equ.equ_dados_utima_calibragem, ";
+		$sql .= " 	equ.equ_media, ";
+		$sql .= " 	equ.equ_dispersao, ";
+		$sql .= " 	equ.equ_observacao,  ";
+		$sql .= " 	equ.equ_qtd_dias_vencimento, ";
+		$sql .= " 	equ.col_codigo, ";
+		$sql .= " 	equ.tab_codigo, ";
+		$sql .= " 	equ.set_codigo, ";
+		$sql .= " 	equ.vei_codigo, ";
+		$sql .= " 	tab.tab_descricao, ";
+		$sql .= " 	vei.vei_nome, ";
+		$sql .= " 	col.col_nome, ";
+		$sql .= " 	seto.set_nome ";
+		$sql .= " FROM gerenciador.tb_equipamento as equ ";
+		$sql .= " INNER JOIN gerenciador.tb_tabela_basica AS tab ON tab.tab_codigo = equ.tab_codigo ";
+		$sql .= " INNER JOIN gerenciador.tb_veiculo AS vei ON vei.vei_codigo = equ.vei_codigo ";
+		$sql .= " INNER JOIN gerenciador.tb_colaborador AS col ON col.col_codigo = equ.col_codigo ";
+		$sql .= " INNER JOIN gerenciador.tb_setor AS seto ON seto.set_codigo = equ.col_codigo ";
 
-    //     $query = parent::$connection->pdo->prepare($sql);
+		$where = "";
 
-    //     $query->bindParam(':idModule', $idModule, PDO::PARAM_INT);
+		if ($veiculo != "") {
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= " equ.vei_codigo = :codigoVeiculo ";
+        }
 
-	// 	if ($query->execute()) {
-	// 		while ($rs = $query->fetch(PDO::FETCH_ASSOC)) {
+		if ($setor != "") {
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= " equ.set_codigo = :codigoSetor ";
+        }
 
-	// 			$objContents = new Contents();
+		if ($dataInicio != "" && $dataFinal != "") {
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= " equ.equ_data_vencimento between :dataInicio AND :dataFim ";
+        }
 
-	// 			$objContents->setId($rs['con_id']);
-	// 			$objContents->setTitle($rs['con_title']);
-	// 			$objContents->setContents($rs['con_contents']);
-	// 			$objContents->setCreationDate($rs['con_create_date']);
-	// 			$objContents->setUpdateDate($rs['con_update_date']);
+		if ($where != "") {
+            $sql .= "WHERE " . $where;
+        }
 
-	// 			$objContents->setObjModule(new Module());
-	// 			$objContents->getObjModule()->setId($rs['mod_id']);
-	// 			$objContents->getObjModule()->setObjUser(new User());
-	// 			$objContents->getObjModule()->getObjUser()->setName($rs['use_name']);
+        $query = parent::$connection->pdo->prepare($sql);
 
-	// 			array_push($collectionContents, $objContents);
-	// 		}
-	// 	} else {
-	// 		$collectionErro = $query->errorInfo();
-	// 		throw new Exception("CourseDAO->listCourse " . $collectionErro[2]);
-	// 	}
-	// 	return $collectionContents;
-    // }
+		if($veiculo){
+			$query->bindParam(":codigoVeiculo", 	$veiculo, 		PDO::PARAM_INT);
+		}
+		if($setor){
+			$query->bindParam(":codigoSetor", 		$setor, 		PDO::PARAM_INT);
+		}
+		if($dataInicio){
+			$query->bindParam(":dataInicio", 		$dataInicio, 	PDO::PARAM_STR);
+		}
+		if($dataFinal){
+			$query->bindParam(":dataFim", 			$dataFinal, 	PDO::PARAM_STR);
+		}
 
-    // public function getCourseInformation($code){
-		
+        $collectionEquipamento = array();
+        if ($query->execute()) {
+            while ($rs = $query->fetch(PDO::FETCH_ASSOC)) {
+               
+				$objEquipamento = new Equipamento();
 
-	// 	$sql = " SELECT  ";
-	// 	$sql .= " 	cou_id, ";
-	// 	$sql .= " 	cou_unique_code, ";
-	// 	$sql .= " 	cou_title, ";
-	// 	$sql .= " 	cou_description, ";
-	// 	$sql .= " 	cou_creation_date, ";
-	// 	$sql .= " 	cou_update_date, ";
-	// 	$sql .= " 	use_id ";
-	// 	$sql .= " FROM public.tb_course ";
-	// 	$sql .= " where cou_id = :code  ";
+				$objEquipamento->setCodigo($rs['equ_codigo']);
+				$objEquipamento->setTacto($rs['equ_tacto']);
+				$objEquipamento->setTipoFrequencia($rs['equ_tipo_frequencia']);
+				$objEquipamento->setModelo($rs['equ_modelo']);
+				$objEquipamento->setNumeroSerie($rs['equ_numero_serie']);
+				$objEquipamento->setDataVencimento($rs['equ_data_vencimento']);
+				$objEquipamento->setTorque($rs['equ_torque']);
+				$objEquipamento->setDescricaoOperacao($rs['equ_descricao_operacao']);
+				$objEquipamento->setDataCalibragem($rs['equ_data_calibragem']);
+				$objEquipamento->setDadosUtimaCalibragem($rs['equ_dados_utima_calibragem']);
+				$objEquipamento->setMedia($rs['equ_media']);
+				$objEquipamento->setDispersao($rs['equ_dispersao']);
+				$objEquipamento->setObservacao($rs['equ_observacao']);
+				$objEquipamento->setQtdDiasVencimento($rs['equ_qtd_dias_vencimento']);
+	
+				$objEquipamento->setObjColaborador(new Colaborador());
+				$objEquipamento->getObjColaborador()->setCodigo($rs['col_codigo']);
+				$objEquipamento->getObjColaborador()->setNome($rs['col_nome']);
+				
+				$objEquipamento->setObjVeiculo(new Veiculo());
+				$objEquipamento->getObjVeiculo()->setCodigo($rs['vei_codigo']);
+				$objEquipamento->getObjVeiculo()->setNome($rs['vei_nome']);
+				
+				$objEquipamento->setObjSetor(new Setor());
+				$objEquipamento->getObjSetor()->setCodigo($rs['set_codigo']);
+				$objEquipamento->getObjSetor()->setNome($rs['set_nome']);
+	
+				$objEquipamento->setObjStatus(new TabelaBasica());
+				$objEquipamento->getObjStatus()->setCodigo($rs['tab_codigo']);
+				$objEquipamento->getObjStatus()->setDescricao($rs['tab_descricao']);
 
-	// 	$query = parent::$connection->pdo->prepare($sql);
+                array_push($collectionEquipamento, $objEquipamento);
+            }
+        } else {
+            $collectionErro = $query->errorInfo();
+            throw new Exception("PlanilhaCalibracaoDAO->pesquisarEquipamento" . $collectionErro[2]);
+        }
+        return $collectionEquipamento;
+    }
+	public function pesquisarQtdEquipamento($veiculo, $setor, $dataInicio, $dataFinal){
 
-	// 	$query->bindParam(':code', $code, PDO::PARAM_INT);
+		$sql  = " SELECT ";
+		$sql .= " 	count(equ.equ_codigo) as qtd_equipamento ";
+		$sql .= " FROM gerenciador.tb_equipamento as equ ";
+		$sql .= " INNER JOIN gerenciador.tb_tabela_basica AS tab ON tab.tab_codigo = equ.tab_codigo ";
+		$sql .= " INNER JOIN gerenciador.tb_veiculo AS vei ON vei.vei_codigo = equ.vei_codigo ";
+		$sql .= " INNER JOIN gerenciador.tb_colaborador AS col ON col.col_codigo = equ.col_codigo ";
+		$sql .= " INNER JOIN gerenciador.tb_setor AS seto ON seto.set_codigo = equ.col_codigo ";
 
-	// 	if ($query->execute()) {
-	// 		$rs = $query->fetch(PDO::FETCH_ASSOC);
+		$where = "";
 
-	// 		$objCourse = new Course();
+		if ($veiculo != "") {
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= " equ.vei_codigo = :codigoVeiculo ";
+        }
 
-	// 		$objCourse->setId($rs['cou_id']);
-	// 		$objCourse->setUniqueCode($rs['cou_unique_code']);
-	// 		$objCourse->setTitle($rs['cou_title']);
-	// 		$objCourse->setDescription($rs['cou_description']);
-	// 		$objCourse->setCreationDate($rs['cou_creation_date']);
-	// 		$objCourse->setUpdateDate($rs['cou_update_date']);
+		if ($setor != "") {
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= " equ.set_codigo = :codigoSetor ";
+        }
 
-	// 		$objCourse->setObjUser(new User());
-	// 		$objCourse->getObjUser()->setId($rs['use_id']);
+		if ($dataInicio != "" && $dataFinal != "") {
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= " equ.equ_data_vencimento between :dataInicio AND :dataFim ";
+        }
 
-	// 	} else {
-	// 		$collectionErro = $query->errorInfo();
-	// 		throw new Exception("CourseDAO->getCourseInformation " . $collectionErro[2]);
-	// 	}
-	// 	return $objCourse;
-	// }
+		if ($where != "") {
+            $sql .= "WHERE " . $where;
+        }
 
-    // public function changeCourse($objCourse){
+        $query = parent::$connection->pdo->prepare($sql);
 
-	// 	$sql = " UPDATE public.tb_course SET  ";
-	// 	$sql .= " cou_unique_code = 	:uniqueCode, ";
-	// 	$sql .= " cou_title = 			:title, ";
-	// 	$sql .= " cou_description = 	:description, ";
-	// 	$sql .= " cou_creation_date = 	:creationDate, ";
-	// 	$sql .= " cou_update_date = 	:updateDate, ";
-	// 	$sql .= " use_id = 				:user ";
-	// 	$sql .= " WHERE cou_id =  		:idCourse ";
+    	if($veiculo){
+			$query->bindParam(":codigoVeiculo", 	$veiculo, 		PDO::PARAM_INT);
+		}
+		if($setor){
+			$query->bindParam(":codigoSetor", 		$setor, 		PDO::PARAM_INT);
+		}
+		if($dataInicio){
+			$query->bindParam(":dataInicio", 		$dataInicio, 	PDO::PARAM_STR);
+		}
+		if($dataFinal){
+			$query->bindParam(":dataFim", 			$dataFinal, 	PDO::PARAM_STR);
+		}
+	
+		if ($query->execute()) {
+            $rs = $query->fetch(PDO::FETCH_ASSOC);
+            return $rs['qtd_equipamento'];
+        } else {
+            $collectionErro = $query->errorInfo();
+            throw new Exception("RelatorioDAO->pesquisarQtdEquipamento " . $collectionErro[2]);
+        }
+    }
 
-	// 	$query = parent::$connection->pdo->prepare($sql);
-
-	// 	$query->bindParam(':idCourse', 			$objCourse->getId(), 				PDO::PARAM_INT);
-	// 	$query->bindParam(':uniqueCode', 		$objCourse->getUniqueCode(), 		PDO::PARAM_STR);
-	// 	$query->bindParam(':title', 			$objCourse->getTitle(), 		    PDO::PARAM_STR);
-	// 	$query->bindParam(':description', 		$objCourse->getDescription(), 		PDO::PARAM_STR);
-	// 	$query->bindParam(':creationDate', 		$objCourse->getCreationDate(), 	    PDO::PARAM_STR);
-	// 	$query->bindParam(':updateDate', 		date('Y/m/d'), 	    				PDO::PARAM_STR);
-	// 	$query->bindParam(':user', 				$objCourse->getObjUser()->getId(), 	PDO::PARAM_INT);
-
-	// 	if (!$query->execute()) {
-	// 		$collectionErro = $query->errorInfo();
-	// 		throw new Exception("CursoDAO->alterarCurso " . $collectionErro[2]);
-	// 	}
-	// 	return true;
-	// }
-
-    // public function deleteCourse($id)
-	// {
-
-	// 	$sql  = "DELETE FROM public.tb_course ";
-	// 	$sql .= "WHERE cou_id = :id ";
-
-	// 	$query = parent::$connection->pdo->prepare($sql);
-
-	// 	$query->bindParam(':id', $id, PDO::PARAM_INT);
-
-	// 	if (!$query->execute()) {
-	// 		$collectionErro = $query->errorInfo();
-	// 		throw new Exception("CursoDAO->excluirCurso " . $collectionErro[2]);
-	// 	}
-	// 	return true;
-	// }
-
-
-
+    
 
 
 }

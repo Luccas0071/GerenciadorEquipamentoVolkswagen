@@ -7,7 +7,7 @@
        
         jQuery.ajax({
             type: "POST",
-            url: 'index.php?do=index&action=mostrarArquivo',
+            url: 'index.php?do=index&action=incluirPlanilha',
             data: formDados,
             success: function (data) {
                 console.log(data);
@@ -53,7 +53,16 @@
 
     function pesquisarInfoVeiculo(element){
         var codigoVeiculo = jQuery(element).val();
-        window.location = "index.php?do=index&action=inicio&codigoVeiculo=" + codigoVeiculo;
+
+        if(codigoVeiculo != ''){
+            console.log('if');
+            window.location = "index.php?do=index&action=inicio&codigoVeiculo=" + codigoVeiculo;
+        }else{
+            console.log('else');
+            window.location = "index.php?do=index&action=inicio";
+        }
+  
+     
     }
 
 </script>
@@ -72,7 +81,7 @@
         <div class="col-md-5">
             <h3>Pesquisar</h3>
             <select class="form-select" aria-label="Default select example" onchange="pesquisarInfoVeiculo(this)">
-                <option value="0" selected>Selecione:</option>
+                <option value="" selected>Selecione:</option>
                 {foreach item=objVeiculo from=$collectionVeiculo}			
                     {if ($objVeiculoForm->getCodigo() == $objVeiculo->getCodigo())}
                         <option value="{$objVeiculo->getCodigo()}" selected>{$objVeiculo->getNome()}</option>
@@ -107,7 +116,14 @@
         <div class="col-md-5">
             <div class="h-100 p-3 bg-light border rounded-3" style="text-align: center;">
                 <h2>Informações de Ferramentas</h2>
-                <div id="piechart" style="width: 500px; height: 250px;"></div>
+                {if $objPagina->getQtdTotalRegistro() != 0}
+                    <div id="piechart" style="width: 500px; height: 250px;"></div>
+                {else}
+                    <br><br><br><br>
+                    <div class="text-center text-danger" style="width: 500px; height: 250px;">
+                        <button type="button" class="btn btn-outline-secondary" disabled>Nenhum Registro encontrado !</button>
+                    </div>
+                {/if}
             </div>
         </div>
         <div class="col-md-7">
@@ -117,20 +133,26 @@
                         <h3>Proxima da Calibragem  </h3>
                     </div>
                     <div  class="col-md-3 text-end">
-                        <button type="button" class="btn btn-outline-primary">Quantidade : {$objPagina->getQtdTotalRegistro()}</button>
+                        <button type="button" class="btn btn-outline-secondary" disabled>
+                            {if $objPagina->getQtdTotalRegistro() != 0}
+                                Quantidade : {$objPagina->getQtdTotalRegistro()}
+                            {else}
+                                Quantidade : 0
+                            {/if}
+                        </button>
                     </div>
                 </div>
                 <br>
-                {if $objPagina->getRegistros() != 0}
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Modela</td>
-                                <th scope="col">N° Série</td>
-                                <th scope="col">Data Calibragem</td>
-                                <th scope="col">Data Vencimento</td>
-                            </tr>
-                        </thead>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Modela</td>
+                            <th scope="col">N° Série</td>
+                            <th scope="col">Data Calibragem</td>
+                            <th scope="col">Data Vencimento</td>
+                        </tr>
+                    </thead>
+                    {if $objPagina->getQtdTotalRegistro() != 0}
                         <tdoby>
                             {foreach item=objEquipamento from=$collectionEquipamento}
                                 <tr>
@@ -141,24 +163,16 @@
                                 </tr>
                             {/foreach}
                         </tdoby>
-                    </table>
-                {else}
-                    <table class="table">
-                        <thead class="thead-dark">
+                    {else}
+                        <tdoby> 
                             <tr>
-                                <th scope="col">Modela</td>
-                                <th scope="col">N° Série</td>
-                                <th scope="col">Data Calibragem</td>
-                                <th scope="col">Data Vencimento</td>
-                            </tr>
-                        </thead>
-                        <tdoby>
-                            <tr>
-                                <td>Nenhum registro encontrado !</td>
+                                <td class="text-center text-danger" colspan="4">
+                                    <button type="button" class="btn btn-outline-secondary" disabled>Nenhum Registro encontrado !</button>
+                                </td>
                             </tr>
                         </tdoby>
-                    </table>
-                {/if}
+                    {/if}
+                </table>
             </div>
         </div>
     </div>
@@ -210,4 +224,5 @@
 
         chart.draw(data, options);
     }
+
 </script>

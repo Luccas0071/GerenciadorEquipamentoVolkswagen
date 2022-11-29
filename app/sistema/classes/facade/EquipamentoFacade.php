@@ -120,7 +120,7 @@ class EquipamentoFacade{
         try {
             DAOFactory::$connection->pdo->beginTransaction();
 
-            $objPagina->setQtdTotalRegistro($objEquipamentoDAO->qtdEquipamentoPorVeiculo($codigoVeiculo, 0));
+            $objPagina->setQtdTotalRegistro($objEquipamentoDAO->qtdEquipamentoPorVeiculo($codigoVeiculo, ''));
             $objPagina->setRegistros($objEquipamentoDAO->listarEquipamentoPorVeiculo($codigoVeiculo));
 
 

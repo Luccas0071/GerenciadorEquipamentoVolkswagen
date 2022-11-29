@@ -4,13 +4,13 @@
         window.location = "index.php?do=planilhaCalibracao&action=editar&acao=A&codigoPlanilhaCalibracao=" + codigoPlanilhaCalibracao;
     }
 
-    function excluirColaborador(codigoPlanilhaCalibracao){
+    function excluirPlanilhaCalibracao(codigoPlanilhaCalibracao){
 
-        var resposta = confirm("Deseja realmente excluir este colaborador !");
+        var resposta = confirm("Deseja realmente excluir este planilha de calibragem !");
 
         if(resposta == true){
 
-            var urlAction = "index.php?do=planilha&action=excluir";
+            var urlAction = "index.php?do=planilhaCalibracao&action=excluir";
 
             jQuery.ajax({
                 type: 'GET',
@@ -20,7 +20,7 @@
                 },
                 success: function (data) {
                     console.log(data);
-                    window.location = "index.php?do=planilha&action=inicio";
+                    window.location = "index.php?do=planilhaCalibracao&action=inicio";
                     alert("Planilha excluido com Sucesso !")
                 }
             });

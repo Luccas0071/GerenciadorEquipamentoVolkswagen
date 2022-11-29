@@ -4,8 +4,11 @@ class Relatorio{
     
     private $codigo;
     private $nome;
-    private $dataAdmissao;
-    private $funcao;
+    private $dataInclusao;
+    private $dataInicio;
+    private $dataFinal;
+    private $objVeiculo;
+    private $objSetor;
 
     public function getCodigo()
     {
@@ -31,26 +34,62 @@ class Relatorio{
         return $this;
     }
  
-    public function getDataAdmissao()
+    public function getDataInclusao()
     {
-        return $this->dataAdmissao;
+        return $this->dataInclusao;
     }
 
-    public function setDataAdmissao($dataAdmissao)
+    public function setDataInclusao($dataInclusao)
     {
-        $this->dataAdmissao = $dataAdmissao;
+        $this->dataInclusao = $dataInclusao;
 
         return $this;
     }
  
-    public function getFuncao()
+    public function getDataInicio()
     {
-        return $this->funcao;
+        return $this->dataInicio;
     }
 
-    public function setFuncao($funcao)
+    public function setDataInicio($dataInicio)
     {
-        $this->funcao = $funcao;
+        $this->dataInicio = $dataInicio;
+
+        return $this;
+    }
+ 
+    public function getDataFinal()
+    {
+        return $this->dataFinal;
+    }
+
+    public function setDataFinal($dataFinal)
+    {
+        $this->dataFinal = $dataFinal;
+
+        return $this;
+    }
+ 
+    public function getObjVeiculo()
+    {
+        return $this->objVeiculo;
+    }
+
+    public function setObjVeiculo($objVeiculo)
+    {
+        $this->objVeiculo = $objVeiculo;
+
+        return $this;
+    }
+ 
+    public function getObjSetor()
+    {
+        return $this->objSetor;
+    }
+
+    public function setObjSetor($objSetor)
+    {
+        $this->objSetor = $objSetor;
 
         return $this;
     }

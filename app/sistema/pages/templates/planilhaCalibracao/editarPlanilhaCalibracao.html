@@ -1,5 +1,5 @@
 <script>
-
+    indice = 0;
     function salvarPlanilhaCalibracao(){
         var acao = jQuery("#acao").val();
 
@@ -31,7 +31,55 @@
     }
 
     function redirecionar(){
-        window.location = "index.php?do=colaborador&action=inicio";
+        window.location = "index.php?do=planilhaCalibracao&action=inicio";
+    }
+
+    function listarItemPlanilhaCalibracao(){
+        let codigoPlanilhaCalibracao = jQuery("#codigoPlanilhaCalibracao").val();
+
+        if(codigoPlanilhaCalibracao != "") {
+            jQuery.ajax({
+                type: 'GET',
+                url: 'index.php?do=planilhaCalibracao&action=listarItemPlanilhaCalibracao',
+                data: {
+                    'codigoPlanilhaCalibracao': codigoPlanilhaCalibracao
+                },
+                success: function(data) {
+                    // console.log(data);
+                    let arrayPlanilhaCalibracao = JSON.parse(data);
+                    processaItemPlanilhaCalibracao(arrayPlanilhaCalibracao);
+                }
+            });
+        }
+    }
+
+    function processaItemPlanilhaCalibracao(arrayPlanilhaCalibracao) {
+        console.log(arrayPlanilhaCalibracao);
+        arrayPlanilhaCalibracao.forEach((itemPlanilhaCalibracao) => {
+            var e = jQuery("#editaPlanilhaCalibracao");
+			var base = jQuery("#itemPlanilhaCalibracaoBase-base").html();
+			base = base.replace(/\-i\-/g, indice);
+            base = base.replace(/\-sequencia\-/g, indice);
+			e.append(base);
+
+            jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".indice").val(indice);	
+            jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".codigoItemPlanilhaCalibracao").val(itemPlanilhaCalibracao['codigo_item_planilha_calibracao']);	
+            jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".codigoPlanilhaCalibracao").val(itemPlanilhaCalibracao['codigo_planilha_calibracao']);
+
+            jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".location").val(itemPlanilhaCalibracao['location']);	
+            jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".description").val(itemPlanilhaCalibracao['description']);	
+            jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".folder").val(itemPlanilhaCalibracao['folder']);	
+            jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".testType").val(itemPlanilhaCalibracao['test_type']);	
+            jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".measure").val(itemPlanilhaCalibracao['measure']);	
+            // jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".nextCheck").val(itemPlanilhaCalibracao['next_check']);	
+            jQuery("#itemPlanilhaCalibracaoBase" + indice).find(".observacao").val(itemPlanilhaCalibracao['observacao']);	
+
+            if (itemPlanilhaCalibracao['observacao'] == 'Não enc.') {
+                jQuery("#itemPlanilhaCalibracaoBase" + indice).find('#borda_item').addClass('border-danger')
+            }
+
+            indice++
+        });
     }
 
 </script>
@@ -65,10 +113,9 @@
     </div>
          
     <form name="frmColaborador" id="frmColaborador">
-        <input type="hidden" name="acao" 				id="acao" 				    value="{$objPlanilhaCalibracaoForm->getAcao()}">
-        <input type="hidden" name="codigoColaborador" 	id="codigoColaborador" 		value="{$objPlanilhaCalibracaoForm->getCodigo()}">
+        <input type="hidden" name="acao" 				        id="acao" 				        value="{$objPlanilhaCalibracaoForm->getAcao()}">
+        <input type="hidden" name="codigoPlanilhaCalibracao" 	id="codigoPlanilhaCalibracao" 	value="{$objPlanilhaCalibracaoForm->getCodigo()}">
         
-    
         <div class="row align-items-start">
             <div class="col-4">
                 <div class="padding-padrao">
@@ -80,15 +127,34 @@
             <div class="col-2">
                 <div class="padding-padrao">
                     <label for="dataInclusao" title="Data Admissão" class="text-ellipsis">Data Inclusao:</label>
-                    <input type="date" name="dataInclusao" id="dataInclusao" class="dataInclusao form-control form-control-sm" value="{$objPlanilhaCalibracaoForm->getDataInclusao()}" >
+                    <input type="date" name="dataInclusao" id="dataInclusao" class="dataInclusao form-control form-control-sm" value="{$objPlanilhaCalibracaoForm->getDataInclusao()}" readonly>
                 </div>
             </div>
         </div>
 
         <br>
-        {include file="planilhaCalibracao/listarItemPlanilhaCalibracao.html"}
+            <div class="row align-items-start">
+                <div class="col-12">
+                    <h5>Itens Calibragem</h5>
+                </div>
+            </div>
 
+            <div class="container">
+                <div class="row align-items-start">
+                    <div class="col-12">
+                        <div id="editaPlanilhaCalibracao"></div>
+                    </div>
+                </div>
+            </div>
+      
+        <br>
+        {include file="planilhaCalibracao/itemPlanilhaCalibracaoBase.html"}
     </form>
 </div>
 
 {include file="include/footer.html"}
+
+
+<script>
+    listarItemPlanilhaCalibracao();
+</script>

@@ -93,6 +93,51 @@ CREATE TABLE IF NOT EXISTS gerenciador.tb_equipamento
 
 );
 
+-- CREATE TABLE IF NOT EXISTS gerenciador.tb_equipamento
+-- (
+--     equ_codigo serial,
+--     equ_tacto character varying, 
+--     equ_tipo_frequencia character varying, 
+--     equ_modelo character varying, 
+--     equ_numero_serie character varying, 
+--     equ_data_vencimento date, 
+--     equ_torque character varying, 
+--     equ_descricao_operacao character varying, 
+--     equ_data_calibragem date, 
+--     equ_dados_utima_calibragem character varying, 
+--     equ_media character varying, 
+--     equ_dispersao character varying, 
+--     equ_observacao character varying, 
+--     equ_qtd_dias_vencimento integer, 
+--     col_codigo integer, 
+--     tab_codigo integer, 
+-- 	set_codigo integer, 
+--     vei_codigo integer, 
+--     CONSTRAINT pk_equipamento PRIMARY KEY (equ_codigo),
+    
+--     CONSTRAINT fk_tb_equipamento_tb_colaborador FOREIGN KEY (col_codigo)
+--     REFERENCES gerenciador.tb_colaborador (col_codigo) MATCH SIMPLE
+--     ON UPDATE NO ACTION
+--     ON DELETE NO ACTION,
+
+--     CONSTRAINT fk_tb_equipamento_tb_tabela_basica FOREIGN KEY (tab_codigo)
+--     REFERENCES gerenciador.tb_tabela_basica (tab_codigo) MATCH SIMPLE
+--     ON UPDATE NO ACTION
+--     ON DELETE NO ACTION,
+	
+-- 	 CONSTRAINT fk_tb_equipamento_tb_setor FOREIGN KEY (set_codigo)
+--     REFERENCES gerenciador.tb_setor (set_codigo) MATCH SIMPLE
+--     ON UPDATE NO ACTION
+--     ON DELETE NO ACTION,
+	
+-- 	 CONSTRAINT fk_tb_equipamento_tb_veiculo FOREIGN KEY (vei_codigo)
+--     REFERENCES gerenciador.tb_veiculo (vei_codigo) MATCH SIMPLE
+--     ON UPDATE NO ACTION
+--     ON DELETE NO ACTION
+
+-- );
+
+
 CREATE TABLE IF NOT EXISTS gerenciador.tb_veiculo
 (
     vei_codigo serial,

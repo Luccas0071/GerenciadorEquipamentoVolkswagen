@@ -1,7 +1,7 @@
 <script>
 
-    function gerarRelatorio(){
-        window.location = "index.php?do=relatorio&action=gerarRelatorio";
+    function incluirRelatorio(){
+        window.location = "index.php?do=relatorio&action=editar&acao=I";
     }
 
 
@@ -16,8 +16,8 @@
             <h3>Relatorio</h3>
         </div>
         <div class="col-2 texto-right">
-            <button type="button" class="btn btn-primary btn-sm" onclick="gerarRelatorio()">
-                <i class="far fa-file-pdf"></i> Gerar Relatorio
+            <button type="button" class="btn btn-primary btn-sm" onclick="incluirRelatorio()">
+                <i class="far fa-plus"></i> Incluir Relatorio
             </button>
         </div>
         <hr>
@@ -30,46 +30,8 @@
 
                     <div class="col-3">
                         <div class="padding-padrao">
-                            <label for="statos" title="Status" class="text-ellipsis">Veiculo:</label>
-                            <select name="statos" id="statos" class="statos form-control form-control-sm">
-                                <option value="" selected>Selecione</option>
-                                <!-- {foreach item=objStatus from=$collectionStatus}
-                                    {if ($objEquipamentoForm->getStatus() == $objStatus->getCodigo())}
-                                        <option value="{$objStatus->getCodigo()}" selected>{$objStatus->getDescricao()}</option>
-                                    {else}											
-                                        <option value="{$objStatus->getCodigo()}">{$objStatus->getDescricao()}</option>
-                                    {/if} 
-                                {/foreach} -->
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-2">
-                        <div class="padding-padrao">
-                            <label for="statos" title="Status" class="text-ellipsis">Setor:</label>
-                            <select name="statos" id="statos" class="statos form-control form-control-sm">
-                                <option value="" selected>Selecione</option>
-                                <!-- {foreach item=objStatus from=$collectionStatus}
-                                    {if ($objEquipamentoForm->getStatus() == $objStatus->getCodigo())}
-                                        <option value="{$objStatus->getCodigo()}" selected>{$objStatus->getDescricao()}</option>
-                                    {else}											
-                                        <option value="{$objStatus->getCodigo()}">{$objStatus->getDescricao()}</option>
-                                    {/if} 
-                                {/foreach} -->
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-2">
-                        <div class="padding-padrao">
-                            <label for="dataCalibragem" title="Data Calibragem" class="text-ellipsis">Periodo de:</label>
-                            <input type="date" name="dataCalibragem" id="dataCalibragem" class="dataCalibragem form-control form-control-sm" value="">
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="padding-padrao">
-                            <label for="dataCalibragem" title="Data Calibragem" class="text-ellipsis">Até:</label>
-                            <input type="date" name="dataCalibragem" id="dataCalibragem" class="dataCalibragem form-control form-control-sm" value="">
+                            <label for="nome" title="Data Calibragem" class="text-ellipsis">Nome:</label>
+                            <input type="text" name="nome" id="nome" class="nome form-control form-control-sm" value="">
                         </div>
                     </div>
 

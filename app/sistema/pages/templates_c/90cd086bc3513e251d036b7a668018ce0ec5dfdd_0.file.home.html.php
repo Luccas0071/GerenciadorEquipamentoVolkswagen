@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-21 01:20:58
+/* Smarty version 4.0.0, created on 2022-11-30 00:34:46
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\home.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_637ac46ae66d56_94933148',
+  'unifunc' => 'content_63869716cca500_57760221',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '90cd086bc3513e251d036b7a668018ce0ec5dfdd' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\home.html',
-      1 => 1668990055,
+      1 => 1669764882,
       2 => 'file',
     ),
   ),
@@ -23,7 +23,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_637ac46ae66d56_94933148 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63869716cca500_57760221 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
    
@@ -33,7 +33,7 @@ echo '<script'; ?>
        
         jQuery.ajax({
             type: "POST",
-            url: 'index.php?do=index&action=mostrarArquivo',
+            url: 'index.php?do=index&action=incluirPlanilha',
             data: formDados,
             success: function (data) {
                 console.log(data);
@@ -79,7 +79,16 @@ echo '<script'; ?>
 
     function pesquisarInfoVeiculo(element){
         var codigoVeiculo = jQuery(element).val();
-        window.location = "index.php?do=index&action=inicio&codigoVeiculo=" + codigoVeiculo;
+
+        if(codigoVeiculo != ''){
+            console.log('if');
+            window.location = "index.php?do=index&action=inicio&codigoVeiculo=" + codigoVeiculo;
+        }else{
+            console.log('else');
+            window.location = "index.php?do=index&action=inicio";
+        }
+  
+     
     }
 
 <?php echo '</script'; ?>
@@ -103,7 +112,7 @@ $_smarty_tpl->_subTemplateRender("file:include/menu.html", $_smarty_tpl->cache_i
         <div class="col-md-5">
             <h3>Pesquisar</h3>
             <select class="form-select" aria-label="Default select example" onchange="pesquisarInfoVeiculo(this)">
-                <option value="0" selected>Selecione:</option>
+                <option value="" selected>Selecione:</option>
                 <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['collectionVeiculo']->value, 'objVeiculo');
 $_smarty_tpl->tpl_vars['objVeiculo']->do_else = true;
@@ -149,7 +158,14 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <div class="col-md-5">
             <div class="h-100 p-3 bg-light border rounded-3" style="text-align: center;">
                 <h2>Informações de Ferramentas</h2>
-                <div id="piechart" style="width: 500px; height: 250px;"></div>
+                <?php if ($_smarty_tpl->tpl_vars['objPagina']->value->getQtdTotalRegistro() != 0) {?>
+                    <div id="piechart" style="width: 500px; height: 250px;"></div>
+                <?php } else { ?>
+                    <br><br><br><br>
+                    <div class="text-center text-danger" style="width: 500px; height: 250px;">
+                        <button type="button" class="btn btn-outline-secondary" disabled>Nenhum Registro encontrado !</button>
+                    </div>
+                <?php }?>
             </div>
         </div>
         <div class="col-md-7">
@@ -159,21 +175,27 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                         <h3>Proxima da Calibragem  </h3>
                     </div>
                     <div  class="col-md-3 text-end">
-                        <button type="button" class="btn btn-outline-primary">Quantidade : <?php echo $_smarty_tpl->tpl_vars['objPagina']->value->getQtdTotalRegistro();?>
-</button>
+                        <button type="button" class="btn btn-outline-secondary" disabled>
+                            <?php if ($_smarty_tpl->tpl_vars['objPagina']->value->getQtdTotalRegistro() != 0) {?>
+                                Quantidade : <?php echo $_smarty_tpl->tpl_vars['objPagina']->value->getQtdTotalRegistro();?>
+
+                            <?php } else { ?>
+                                Quantidade : 0
+                            <?php }?>
+                        </button>
                     </div>
                 </div>
                 <br>
-                <?php if ($_smarty_tpl->tpl_vars['objPagina']->value->getRegistros() != 0) {?>
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Modela</td>
-                                <th scope="col">N° Série</td>
-                                <th scope="col">Data Calibragem</td>
-                                <th scope="col">Data Vencimento</td>
-                            </tr>
-                        </thead>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Modela</td>
+                            <th scope="col">N° Série</td>
+                            <th scope="col">Data Calibragem</td>
+                            <th scope="col">Data Vencimento</td>
+                        </tr>
+                    </thead>
+                    <?php if ($_smarty_tpl->tpl_vars['objPagina']->value->getQtdTotalRegistro() != 0) {?>
                         <tdoby>
                             <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['collectionEquipamento']->value, 'objEquipamento');
@@ -195,24 +217,16 @@ $_smarty_tpl->tpl_vars['objEquipamento']->do_else = false;
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                         </tdoby>
-                    </table>
-                <?php } else { ?>
-                    <table class="table">
-                        <thead class="thead-dark">
+                    <?php } else { ?>
+                        <tdoby> 
                             <tr>
-                                <th scope="col">Modela</td>
-                                <th scope="col">N° Série</td>
-                                <th scope="col">Data Calibragem</td>
-                                <th scope="col">Data Vencimento</td>
-                            </tr>
-                        </thead>
-                        <tdoby>
-                            <tr>
-                                <td>Nenhum registro encontrado !</td>
+                                <td class="text-center text-danger" colspan="4">
+                                    <button type="button" class="btn btn-outline-secondary" disabled>Nenhum Registro encontrado !</button>
+                                </td>
                             </tr>
                         </tdoby>
-                    </table>
-                <?php }?>
+                    <?php }?>
+                </table>
             </div>
         </div>
     </div>
@@ -270,6 +284,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 
         chart.draw(data, options);
     }
+
 <?php echo '</script'; ?>
 ><?php }
 }

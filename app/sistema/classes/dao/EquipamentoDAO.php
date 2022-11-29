@@ -353,39 +353,45 @@ class EquipamentoDAO extends DAOFactory{
 
 	public function qtdEquipamentoPorVeiculo($codigoVeiculo, $statusEquipamento){
 	
+
 		$sql  = " SELECT ";
 		$sql .= " 	count(equ.equ_codigo) as qtd_equipamento ";
 		$sql .= " FROM gerenciador.tb_equipamento AS equ ";
 		$sql .= " LEFT JOIN gerenciador.tb_tabela_basica AS tab ON equ.tab_codigo = tab.tab_codigo ";
-		$sql .= " WHERE equ.vei_codigo = :codigoVeiculo AND equ.tab_codigo = :statusEquipamento";
+		// $sql .= " WHERE equ.vei_codigo = :codigoVeiculo AND equ.tab_codigo = :statusEquipamento";
 		
-		// $where = "";
+		$where = "";
 
-		// if($codigoVeiculo != ""){
-		// 	if ($where != "") {
-        //         $where .= " AND ";
-        //     }
- 		// 	$where .= " equ.vei_codigo = :codigoVeiculo ";
-		// }
+		if($codigoVeiculo != ""){
+			if ($where != "") {
+                $where .= " AND ";
+            }
+ 			$where .= " equ.vei_codigo = :codigoVeiculo ";
+		}
 
-		// if($statusEquipamento != ""){
-		// 	if ($where != "") {
-        //         $where .= " AND ";
-        //     }
- 		// 	$where .= " equ.tab_codigo = :statusEquipamento ";
-		// }
+		if($statusEquipamento != ""){
+			if ($where != "") {
+                $where .= " AND ";
+            }
+ 			$where .= " equ.tab_codigo = :statusEquipamento ";
+		}
 		
-		// if ($where != "") {
-        //     $sql .= " WHERE " . $where;
-        // }
+		if ($where != "") {
+            $sql .= " WHERE " . $where;
+        }
 
         $query = parent::$connection->pdo->prepare($sql);
 	
-		$query->bindParam(':codigoVeiculo', 		$codigoVeiculo, 		PDO::PARAM_INT);
-		$query->bindParam(':statusEquipamento', 	$statusEquipamento, 	PDO::PARAM_INT);
+		if($codigoVeiculo){
+			$query->bindParam(':codigoVeiculo', 		$codigoVeiculo, 		PDO::PARAM_INT);
+		}
+		if($statusEquipamento){
+			$query->bindParam(':statusEquipamento', 	$statusEquipamento, 	PDO::PARAM_INT);
+		}
 
 		if ($query->execute()) {
             $rs = $query->fetch(PDO::FETCH_ASSOC);
+
             return $rs['qtd_equipamento'];
         } else {
             $collectionErro = $query->errorInfo();

@@ -11,16 +11,23 @@ class InicioAction
         $objVeiculoFacade       = new VeiculoFacade();
         $objEquipamentoFacade   = new EquipamentoFacade();
         $objVeiculoForm         = new VeiculoForm();
-
-        $codigoVeiculo = $get['codigoVeiculo'];
-        
+        $objPagina              = new Pagina();
+        $arrayQtd['qtdEmCalibracao'] = 0;
+        $arrayQtd['qtdCalibrado'] = 0;
+        $arrayQtd['qtdNaoEncontrado'] = 0;
+        $codigoVeiculo = 0;
         try {
+          
+
             $collectionVeiculo = $objVeiculoFacade->listarVeiculo();
             $smarty->assign("collectionVeiculo", $collectionVeiculo);
 
-            $objPagina = $objEquipamentoFacade->listarEquipamentoPorVeiculo($codigoVeiculo);
+            if(isset($get['codigoVeiculo'])){
+                $codigoVeiculo = $get['codigoVeiculo'];
+                $objPagina = $objEquipamentoFacade->listarEquipamentoPorVeiculo($codigoVeiculo);
+                $arrayQtd = $objEquipamentoFacade->listarQtdEquipamentoPorSituacao($codigoVeiculo);
+            }
 
-            $arrayQtd = $objEquipamentoFacade->listarQtdEquipamentoPorSituacao($codigoVeiculo);
 
         } catch (Exception $e) {
             throw new Exception("InicioAction->star " . $e);

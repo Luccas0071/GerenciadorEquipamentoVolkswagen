@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.0.0, created on 2022-11-26 14:05:28
+/* Smarty version 4.0.0, created on 2022-11-26 23:27:19
   from 'C:\xampp7\htdocs\ProjetoIntegrador\app\sistema\pages\templates\equipamento\editarEquipamento.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.0.0',
-  'unifunc' => 'content_63820f1831bdb3_60341474',
+  'unifunc' => 'content_638292c79fe4c6_90421622',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '75bcd4787ae2851f142b22d2117d573859d7b961' => 
     array (
       0 => 'C:\\xampp7\\htdocs\\ProjetoIntegrador\\app\\sistema\\pages\\templates\\equipamento\\editarEquipamento.html',
-      1 => 1669074557,
+      1 => 1669501635,
       2 => 'file',
     ),
   ),
@@ -23,7 +23,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:include/footer.html' => 1,
   ),
 ),false)) {
-function content_63820f1831bdb3_60341474 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638292c79fe4c6_90421622 (Smarty_Internal_Template $_smarty_tpl) {
 echo '<script'; ?>
 >
 
@@ -231,11 +231,11 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                 </div>
             </div>
 
-            <div class="col-1"><br>
+            <!-- <div class="col-1"><br>
                 <button type="button" name="btn-incluir"  id="btn-incluir" class="btn btn-primary btn-sm" onclick="exibirModalVeiculo();">
                     <i class="fa-solid fa-plus"></i> Veiculo
                 </button>
-            </div>
+            </div> -->
 
             <div class="col-2">
                 <div class="padding-padrao">
@@ -264,11 +264,11 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                 </div>
             </div>
 
-            <div class="col-1"><br>    
+            <!-- <div class="col-1"><br>    
                 <button type="button" name="btn-incluir" id="btn-incluir" class="btn btn-primary btn-sm" onclick="exibirModalSetor();">
                     <i class="fa-solid fa-plus"></i> Setor
                 </button>
-            </div>
+            </div> -->
         </div>
         <hr>
         <div class="col-10">
